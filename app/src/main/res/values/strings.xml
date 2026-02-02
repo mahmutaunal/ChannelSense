@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">ChannelSense</string>
+    <string name="reason_least_neighbors">Channel with the fewest neighboring networks on this band. Device count: %1$d, average neighbor signal: %2$d dBm.</string>
+    <string name="app_name_channel_analyzer">ChannelSense</string>
+    <string name="cd_info">Info</string>
+    <string name="cd_settings">Settings</string>
+    <string name="scanning_nearby_networks">Scanning nearby Wi-Fi networks…</string>
+    <string name="channels_and_details">Channels and details:</string>
+    <string name="no_channel_info_try_refresh">No channel information found for this band. You can try again using the \"Refresh\" button.</string>
+    <string name="permission_title_need_permission">We need permission to analyze Wi-Fi channels.</string>
+    <string name="permission_body_location_required">To show nearby Wi-Fi networks and channels, Android requires apps to request a location-based permission. Without it, we can’t determine channel congestion.</string>
+    <string name="permission_body_privacy_note">This permission is used only for Wi-Fi scanning, and no location data is stored on your device.</string>
+    <string name="permission_button_grant_and_scan">Grant permission and start scanning</string>
+    <string name="permission_footer_settings_path">If you previously denied the permission, you can change it from Settings &gt; Apps &gt; ChannelSense &gt; Permissions.</string>
+    <string name="about_title">About ChannelSense</string>
+    <string name="about_body_what_it_does">This app scans nearby Wi-Fi networks and analyzes the channels they use. It suggests which channel you should choose to make your connection faster and more stable.</string>
+    <string name="about_body_why_permission">Because Android treats Wi-Fi scanning as location-related, we must request permission to perform this action.</string>
+    <string name="about_body_privacy">This app does not store your location, send it to servers, or use it for advertising. All processing happens on your device.</string>
+    <string name="about_body_router_note">The app does not change your router settings. Instead, it guides you to your router’s management screen and shows the steps you should follow.</string>
+    <string name="action_close">Close</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="recommended_channel_label">Recommended Channel</string>
+    <string name="recommended_channel_title">Channel %1$d (%2$s)</string>
+    <string name="tap_for_detailed_guide">Tap for a detailed guide.</string>
+    <string name="channel_item_title">Channel %1$d</string>
+    <string name="channel_item_device_count">Device count: %1$d</string>
+    <string name="channel_item_average_neighbor_signal">Average neighbor signal: %1$d dBm</string>
+    <string name="error_wifi_scan_failed">An error occurred during Wi-Fi scanning.</string>
+    <string name="guide_title_channel">Channel %1$d Guide</string>
+    <string name="cd_back">Back</string>
+    <string name="guide_selected_channel">Selected channel: %1$d</string>
+    <string name="guide_select_brand_instructions">Select your modem/router brand. Follow the steps below to change the channel setting to this channel.</string>
+    <string name="guide_open_router_interface">Open Router Interface</string>
+    <string name="guide_step_by_step">Step-by-step guide:</string>
+    <string name="guide_router_brand_label">Modem / Router brand:</string>
+    <string name="guide_step_label">Step %1$d</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_wifi_analyzer_title">WiFi Analyzer</string>
+    <string name="settings_section_wifi_analyzer_subtitle">Default band and scanning behavior</string>
+    <string name="settings_app_version">ChannelSense – WiFi Analyzer v%1$s</string>
+    <string name="settings_default_band_title">Default Wi-Fi band</string>
+    <string name="settings_default_band_description">The band that will be used by default when the Analyzer screen opens.</string>
+    <string name="wifi_band_24ghz">2.4 GHz</string>
+    <string name="wifi_band_5ghz">5 GHz</string>
+    <string name="settings_auto_refresh_title">Auto refresh</string>
+    <string name="settings_auto_refresh_description">Automatically refresh Wi-Fi scanning at intervals. This setting applies while the Analyzer screen is open.</string>
+    <string name="bar_chart_no_channels">No channels to display for this band.</string>
+    <string name="bar_chart_title_channel_density">Channel density (device count)</string>
+    <string name="error_router_gateway_not_found">No valid gateway was found for the router interface. Please enter the IP address manually in your browser (e.g., 192.168.1.1).</string>
+    <string name="error_router_page_open_failed">Failed to open the router interface. Try entering the IP address manually in your browser: %1$s</string>
+    <string name="guide_note_remember_restart">Don’t forget to save the changes and, if necessary, restart your modem or Wi-Fi connection.</string>
+
+    <!-- TP-Link -->
+    <string name="guide_step_tplink_1">Open your router interface in a browser (usually 192.168.1.1 or 192.168.0.1).</string>
+    <string name="guide_step_tplink_2">Log in with your username and password. The default is often admin/admin, or the credentials provided by your ISP.</string>
+    <string name="guide_step_tplink_3">Go to the \"Wireless\" section in the menu.</string>
+    <string name="guide_step_tplink_4">If both 2.4 GHz and 5 GHz are available, choose the band you want to change.</string>
+    <string name="guide_step_tplink_5">Find the \"Channel\" field and select channel %1$d.</string>
+    <string name="guide_step_tplink_6">Save the settings using the \"Save\" / \"Apply\" button.</string>
+
+    <!-- ASUS -->
+    <string name="guide_step_asus_1">Open your router interface in a browser (usually 192.168.1.1).</string>
+    <string name="guide_step_asus_2">Enter your username and password on the login screen.</string>
+    <string name="guide_step_asus_3">Open the \"Wireless\" section from the left menu.</string>
+    <string name="guide_step_asus_4">Select the 2.4 GHz or 5 GHz band from the top tabs.</string>
+    <string name="guide_step_asus_5">In the \"Control Channel\" section, change the channel to %1$d.</string>
+    <string name="guide_step_asus_6">Save the settings using \"Apply\" or \"Save\".</string>
+
+    <!-- Zyxel -->
+    <string name="guide_step_zyxel_1">Open your router interface in a browser (usually 192.168.1.1 or 192.168.1.254).</string>
+    <string name="guide_step_zyxel_2">Log in with your username and password.</string>
+    <string name="guide_step_zyxel_3">Find the \"Wireless\" section in the interface.</string>
+    <string name="guide_step_zyxel_4">Open the settings page for the band you want to change (2.4 GHz or 5 GHz).</string>
+    <string name="guide_step_zyxel_5">Set the \"Channel\" field to %1$d.</string>
+    <string name="guide_step_zyxel_6">Save the settings using the Save/Apply button.</string>
+
+    <!-- Keenetic -->
+    <string name="guide_step_keenetic_1">Open the Keenetic interface in a browser (usually my.keenetic.net or 192.168.1.1).</string>
+    <string name="guide_step_keenetic_2">Log in with your administrator account.</string>
+    <string name="guide_step_keenetic_3">Go to Wi-Fi settings from a section like \"Home Network\".</string>
+    <string name="guide_step_keenetic_4">Open the settings for the relevant network (2.4 GHz or 5 GHz).</string>
+    <string name="guide_step_keenetic_5">Change the \"Channel\" to %1$d.</string>
+    <string name="guide_step_keenetic_6">Save the settings and restart the wireless connection if needed.</string>
+
+    <!-- Huawei -->
+    <string name="guide_step_huawei_1">Open your router interface in a browser (usually 192.168.8.1 or 192.168.1.1).</string>
+    <string name="guide_step_huawei_2">Log in with your username and password.</string>
+    <string name="guide_step_huawei_3">Go to the \"WLAN\" settings section.</string>
+    <string name="guide_step_huawei_4">Select the 2.4 GHz or 5 GHz band.</string>
+    <string name="guide_step_huawei_5">In the \"Channel\" section, select channel %1$d.</string>
+    <string name="guide_step_huawei_6">Save the settings / tap Apply.</string>
+
+    <!-- Generic -->
+    <string name="guide_step_generic_1">Open your modem/router management interface in a browser (usually 192.168.1.1 or 192.168.0.1).</string>
+    <string name="guide_step_generic_2">Log in with your username and password. If you don’t know them, check the label on the device or your ISP documentation.</string>
+    <string name="guide_step_generic_3">Go to \"Wireless\", \"Wi-Fi\", or \"Wireless Network\" settings.</string>
+    <string name="guide_step_generic_4">Open the settings screen for the 2.4 GHz or 5 GHz band.</string>
+    <string name="guide_step_generic_5">Find the \"Channel\" field and select channel %1$d.</string>
+    <string name="guide_step_generic_6">Apply the settings using \"Save\" / \"Apply\".</string>
+</resources>

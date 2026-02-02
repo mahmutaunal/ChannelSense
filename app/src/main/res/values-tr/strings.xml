@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">ChannelSense</string>
+    <string name="reason_least_neighbors">Bu bantta en az komşu ağa sahip kanal. Cihaz sayısı: %1$d, ortalama komşu sinyali: %2$d dBm.</string>
+    <string name="app_name_channel_analyzer">ChannelSense</string>
+    <string name="cd_info">Bilgi</string>
+    <string name="cd_settings">Ayarlar</string>
+    <string name="scanning_nearby_networks">Yakındaki WiFi ağları taranıyor…</string>
+    <string name="channels_and_details">Kanallar ve detaylar:</string>
+    <string name="no_channel_info_try_refresh">Bu bantta kanal bilgisi bulunamadı. \"Yenile\" butonunu kullanarak yeniden deneyebilirsiniz.</string>
+    <string name="permission_title_need_permission">WiFi kanallarını analiz edebilmek için izne ihtiyacımız var.</string>
+    <string name="permission_body_location_required">Yakındaki WiFi ağlarını ve kanallarını görebilmek için Android, uygulamaların konum tabanlı bir izin istemesini zorunlu kılıyor. Bu izin olmadan hangi kanalların ne kadar yoğun olduğunu göremeyiz.</string>
+    <string name="permission_body_privacy_note">İzin sadece WiFi taraması için kullanılır ve cihazınızdan herhangi bir konum kaydı tutulmaz.</string>
+    <string name="permission_button_grant_and_scan">İzin ver ve taramaya başla</string>
+    <string name="permission_footer_settings_path">Eğer daha önce izni reddettiyseniz, Ayarlar &gt; Uygulamalar &gt; ChannelSense &gt; İzinler menüsünden de değiştirebilirsiniz.</string>
+    <string name="about_title">ChannelSense hakkında</string>
+    <string name="about_body_what_it_does">Bu uygulama çevredeki WiFi ağlarını tarayıp kullandıkları kanalları analiz eder. Sizin bağlantınızı daha hızlı ve daha stabil hale getirmek için hangi kanalı seçmeniz gerektiğini önerir.</string>
+    <string name="about_body_why_permission">Android, WiFi taramasını konum bilgisi gibi değerlendirdiği için, bu işlemi yapabilmek adına izin istememiz zorunludur.</string>
+    <string name="about_body_privacy">Bu uygulama konumunuzu kaydetmez, sunuculara göndermez veya reklam amaçlı kullanmaz. Tüm işlem cihazınızda gerçekleşir.</string>
+    <string name="about_body_router_note">Modem ayarlarını uygulama değiştirmez. Bunun yerine modeminizin yönetim ekranına yönlendirerek hangi adımları izlemeniz gerektiğini gösterir.</string>
+    <string name="action_close">Kapat</string>
+    <string name="action_refresh">Yenile</string>
+    <string name="recommended_channel_label">Önerilen Kanal</string>
+    <string name="recommended_channel_title">Kanal %1$d (%2$s)</string>
+    <string name="tap_for_detailed_guide">Detaylı rehber için dokun.</string>
+    <string name="channel_item_title">Kanal %1$d</string>
+    <string name="channel_item_device_count">Cihaz sayısı: %1$d</string>
+    <string name="channel_item_average_neighbor_signal">Ortalama komşu sinyali: %1$d dBm</string>
+    <string name="error_wifi_scan_failed">WiFi taraması sırasında bir hata oluştu.</string>
+    <string name="guide_title_channel">Kanal %1$d Rehberi</string>
+    <string name="cd_back">Geri</string>
+    <string name="guide_selected_channel">Seçilen kanal: %1$d</string>
+    <string name="guide_select_brand_instructions">Modem/Router markanızı seçin. Aşağıdaki adımları izleyerek kanal ayarını bu kanala değiştirebilirsiniz.</string>
+    <string name="guide_open_router_interface">Modem Arayüzünü Aç</string>
+    <string name="guide_step_by_step">Adım adım rehber:</string>
+    <string name="guide_router_brand_label">Modem / Router markası:</string>
+    <string name="guide_step_label">Adım %1$d</string>
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_section_wifi_analyzer_title">WiFi Analyzer</string>
+    <string name="settings_section_wifi_analyzer_subtitle">Varsayılan bant ve tarama davranışı</string>
+    <string name="settings_app_version">ChannelSense – WiFi Analyzer v%1$s</string>
+    <string name="settings_default_band_title">Varsayılan WiFi bandı</string>
+    <string name="settings_default_band_description">Analyzer ekranı açıldığında başlangıç olarak kullanılacak bant.</string>
+    <string name="wifi_band_24ghz">2.4 GHz</string>
+    <string name="wifi_band_5ghz">5 GHz</string>
+    <string name="settings_auto_refresh_title">Otomatik tarama</string>
+    <string name="settings_auto_refresh_description">Belirli aralıklarla WiFi taramasını otomatik yenile. Bu ayar Analyzer ekranı açıkken geçerlidir.</string>
+    <string name="bar_chart_no_channels">Bu bantta görüntülenecek kanal bulunamadı.</string>
+    <string name="bar_chart_title_channel_density">Kanal yoğunluğu (cihaz sayısı)</string>
+    <string name="error_router_gateway_not_found">Modem arayüzü için geçerli bir ağ geçidi bulunamadı. Lütfen IP adresini tarayıcıya manuel girin (örneğin 192.168.1.1).</string>
+    <string name="error_router_page_open_failed">Modem arayüzü açılamadı. IP adresini tarayıcınıza manuel olarak yazmayı deneyin: %1$s</string>
+    <string name="guide_note_remember_restart">Değişiklikleri kaydetmeyi ve gerekirse modemi veya WiFi bağlantınızı yeniden başlatmayı unutmayın.</string>
+
+    <!-- TP-Link -->
+    <string name="guide_step_tplink_1">Tarayıcınızdan modem arayüzüne gidin (genelde 192.168.1.1 veya 192.168.0.1).</string>
+    <string name="guide_step_tplink_2">Kullanıcı adı ve şifre ile giriş yapın. Varsayılan genelde admin / admin veya servis sağlayıcınızın verdiği bilgiler olabilir.</string>
+    <string name="guide_step_tplink_3">Menüden \"Wireless\" veya \"Kablosuz\" sekmesine gidin.</string>
+    <string name="guide_step_tplink_4">Eğer hem 2.4 GHz hem 5 GHz varsa, değiştirmek istediğiniz bant için ilgili sekmeyi seçin.</string>
+    <string name="guide_step_tplink_5">\"Channel\" veya \"Kanal\" alanını bulun ve %1$d numaralı kanalı seçin.</string>
+    <string name="guide_step_tplink_6">\"Save\" / \"Apply\" butonu ile ayarları kaydedin.</string>
+
+    <!-- ASUS -->
+    <string name="guide_step_asus_1">Tarayıcınızdan modem arayüzüne gidin (genelde 192.168.1.1).</string>
+    <string name="guide_step_asus_2">Giriş ekranında kullanıcı adı ve şifrenizi girin.</string>
+    <string name="guide_step_asus_3">Sol menüden \"Wireless\" / \"Kablosuz\" bölümünü açın.</string>
+    <string name="guide_step_asus_4">Üst sekmelerden 2.4 GHz veya 5 GHz bandını seçin.</string>
+    <string name="guide_step_asus_5">\"Control Channel\" / \"Kanal\" bölümünde kanalı %1$d olarak değiştirin.</string>
+    <string name="guide_step_asus_6">\"Apply\" veya \"Save\" ile ayarları kaydedin.</string>
+
+    <!-- Zyxel -->
+    <string name="guide_step_zyxel_1">Tarayıcınızdan modem arayüzüne gidin (genelde 192.168.1.1 veya 192.168.1.254).</string>
+    <string name="guide_step_zyxel_2">Kullanıcı adı ve şifrenizi girerek giriş yapın.</string>
+    <string name="guide_step_zyxel_3">Arayüzde \"Wireless\" / \"Kablosuz\" bölümünü bulun.</string>
+    <string name="guide_step_zyxel_4">Değiştirmek istediğiniz bant (2.4 GHz veya 5 GHz) için ilgili ayar sayfasına geçin.</string>
+    <string name="guide_step_zyxel_5">\"Channel\" / \"Kanal\" alanını %1$d olacak şekilde ayarlayın.</string>
+    <string name="guide_step_zyxel_6">Kaydet / Uygula butonu ile ayarları kaydedin.</string>
+
+    <!-- Keenetic -->
+    <string name="guide_step_keenetic_1">Tarayıcınızdan Keenetic arayüzüne gidin (genelde my.keenetic.net veya 192.168.1.1).</string>
+    <string name="guide_step_keenetic_2">Yönetici hesabınızla giriş yapın.</string>
+    <string name="guide_step_keenetic_3">\"Ev Ağı\" / \"Home Network\" veya benzer bir bölümden Wi-Fi ayarlarına girin.</string>
+    <string name="guide_step_keenetic_4">2.4 GHz veya 5 GHz için ilgili ağın ayarlarını açın.</string>
+    <string name="guide_step_keenetic_5">\"Kanal\" / \"Channel\" kısmını %1$d olarak değiştirin.</string>
+    <string name="guide_step_keenetic_6">Ayarları kaydedin ve gerekirse kablosuz bağlantıyı yeniden başlatın.</string>
+
+    <!-- Huawei -->
+    <string name="guide_step_huawei_1">Tarayıcınızdan modem arayüzüne gidin (genelde 192.168.8.1 veya 192.168.1.1).</string>
+    <string name="guide_step_huawei_2">Kullanıcı adı ve şifre ile giriş yapın.</string>
+    <string name="guide_step_huawei_3">\"WLAN\" / \"Kablosuz\" ayarları bölümüne gidin.</string>
+    <string name="guide_step_huawei_4">2.4 GHz veya 5 GHz bandını seçin.</string>
+    <string name="guide_step_huawei_5">\"Kanal\" / \"Channel\" bölümünden %1$d numaralı kanalı seçin.</string>
+    <string name="guide_step_huawei_6">Ayarları kaydedin / Uygula butonuna basın.</string>
+
+    <!-- Generic -->
+    <string name="guide_step_generic_1">Tarayıcınızdan modem / router yönetim arayüzüne gidin (genellikle 192.168.1.1 veya 192.168.0.1).</string>
+    <string name="guide_step_generic_2">Kullanıcı adı ve şifre ile giriş yapın. Bilmiyorsanız cihazın altındaki etikete veya servis sağlayıcınızın dökümanına bakın.</string>
+    <string name="guide_step_generic_3">Menüden \"Wireless\", \"Wi-Fi\" veya \"Kablosuz Ağ\" ayarlarına gidin.</string>
+    <string name="guide_step_generic_4">2.4 GHz veya 5 GHz bandı için ilgili ayar ekranını açın.</string>
+    <string name="guide_step_generic_5">\"Channel\" / \"Kanal\" alanını bulun ve %1$d numaralı kanalı seçin.</string>
+    <string name="guide_step_generic_6">\"Save\" / \"Apply\" / \"Kaydet\" butonu ile ayarları uygulayın.</string>
+</resources>
