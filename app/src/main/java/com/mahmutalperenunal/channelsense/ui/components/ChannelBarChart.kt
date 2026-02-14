@@ -59,7 +59,7 @@ fun ChannelBarChart(
         ) {
             Text(
                 text = stringResource(R.string.bar_chart_title_channel_density),
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary
             )
 
@@ -68,7 +68,7 @@ fun ChannelBarChart(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(maxBarHeight + 32.dp),
+                    .height(maxBarHeight + 56.dp),
                 verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -79,6 +79,7 @@ fun ChannelBarChart(
                     ChannelBar(
                         usage = usage,
                         height = barHeight,
+                        maxBarHeight = maxBarHeight,
                         isRecommended = usage.channel == recommendedChannel,
                         onClick = { onChannelClick(usage) }
                     )
@@ -92,6 +93,7 @@ fun ChannelBarChart(
 private fun ChannelBar(
     usage: ChannelUsage,
     height: Dp,
+    maxBarHeight: Dp,
     isRecommended: Boolean,
     onClick: () -> Unit
 ) {
@@ -115,11 +117,18 @@ private fun ChannelBar(
 
         Box(
             modifier = Modifier
-                .height(height.coerceAtLeast(4.dp))
-                .width(18.dp)
-                .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
-                .background(barColor)
-        )
+                .height(maxBarHeight)
+                .width(18.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Box(
+                modifier = Modifier
+                    .height(height.coerceAtLeast(4.dp))
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                    .background(barColor)
+            )
+        }
 
         Spacer(modifier = Modifier.height(4.dp))
 

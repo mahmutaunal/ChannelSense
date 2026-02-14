@@ -3,30 +3,75 @@ package com.mahmutalperenunal.channelsense.wifi.scanner
 import android.content.Context
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
+import android.util.Log
 import com.mahmutalperenunal.channelsense.wifi.model.WifiNetworkInfo
 import com.mahmutalperenunal.channelsense.util.FrequencyUtils
 import com.mahmutalperenunal.channelsense.wifi.permissions.WifiPermissionHelper
+import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
+import android.location.LocationManager
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 class WifiScanner(private val context: Context) {
 
-    private val wifiManager =
-        context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+    private val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
 
-    fun scan(): List<WifiNetworkInfo> {
-        if (!WifiPermissionHelper.hasRequiredPermissions(context)) {
-            return emptyList()
+    @SuppressLint("MissingPermission")
+    suspend fun scan(): List<WifiNetworkInfo> = suspendCancellableCoroutine { cont ->
+
+        val hasPermission = WifiPermissionHelper.hasRequiredPermissions(context)
+        Log.d("SCAN", "hasPermission=$hasPermission")
+        if (!hasPermission) {
+            cont.resume(emptyList())
+            return@suspendCancellableCoroutine
         }
 
-        return try {
-            wifiManager.startScan()
+        val locationManager =
+            context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        Log.d("SCAN", "locationEnabled=${locationManager.isLocationEnabled}")
 
-            val results = wifiManager.scanResults ?: return emptyList()
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(c: Context, intent: Intent) {
+                try {
+                    val results = wifiManager.scanResults.orEmpty()
 
-            results.mapNotNull { scanResult ->
-                mapResult(scanResult)
+                    Log.d("SCAN", "scanResults size=${results.size}")
+                    results.forEach {
+                        Log.d(
+                            "SCAN",
+                            "ssid=${it.SSID} bssid=${it.BSSID} freq=${it.frequency} level=${it.level}"
+                        )
+                    }
+
+                    val mapped = results.mapNotNull { mapResult(it) }
+                    cont.resume(mapped)
+                } catch (_: SecurityException) {
+                    cont.resume(emptyList())
+                } finally {
+                    runCatching { context.unregisterReceiver(this) }
+                }
             }
-        } catch (_: SecurityException) {
-            emptyList()
+        }
+
+        context.registerReceiver(
+            receiver,
+            IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
+        )
+
+        val started = wifiManager.startScan()
+        Log.d("SCAN", "startScan returned=$started")
+
+        if (!started) {
+            runCatching { context.unregisterReceiver(receiver) }
+            cont.resume(emptyList())
+            return@suspendCancellableCoroutine
+        }
+
+        cont.invokeOnCancellation {
+            runCatching { context.unregisterReceiver(receiver) }
         }
     }
 

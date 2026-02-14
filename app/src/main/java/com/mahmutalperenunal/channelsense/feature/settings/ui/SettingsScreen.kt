@@ -76,7 +76,7 @@ fun SettingsScreen(
             }
 
             Text(
-                text = stringResource(R.string.settings_app_version, "1.0.0"),
+                text = stringResource(R.string.settings_app_version, "1.0.1"),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.secondary
             )
@@ -168,6 +168,11 @@ private fun DefaultBandSettingRow(
                     selected = selectedBand == WifiBand.FIVE_GHZ,
                     onClick = { onBandSelected(WifiBand.FIVE_GHZ) },
                     label = { Text(stringResource(R.string.wifi_band_5ghz)) }
+                )
+                FilterChip(
+                    selected = selectedBand == WifiBand.SIX_GHZ,
+                    onClick = { onBandSelected(WifiBand.SIX_GHZ) },
+                    label = { Text(stringResource(R.string.wifi_band_6ghz)) }
                 )
             }
         }

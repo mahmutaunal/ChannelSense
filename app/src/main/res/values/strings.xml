@@ -5,7 +5,7 @@
     <string name="cd_info">Info</string>
     <string name="cd_settings">Settings</string>
     <string name="scanning_nearby_networks">Scanning nearby Wi-Fi networks…</string>
-    <string name="channels_and_details">Channels and details:</string>
+    <string name="channels_and_details">Channels &amp; Details</string>
     <string name="no_channel_info_try_refresh">No channel information found for this band. You can try again using the \"Refresh\" button.</string>
     <string name="permission_title_need_permission">We need permission to analyze Wi-Fi channels.</string>
     <string name="permission_body_location_required">To show nearby Wi-Fi networks and channels, Android requires apps to request a location-based permission. Without it, we can’t determine channel congestion.</string>
@@ -21,7 +21,7 @@
     <string name="action_refresh">Refresh</string>
     <string name="recommended_channel_label">Recommended Channel</string>
     <string name="recommended_channel_title">Channel %1$d (%2$s)</string>
-    <string name="tap_for_detailed_guide">Tap for a detailed guide.</string>
+    <string name="tap_for_detailed_guide">Tap for a detailed guide</string>
     <string name="channel_item_title">Channel %1$d</string>
     <string name="channel_item_device_count">Device count: %1$d</string>
     <string name="channel_item_average_neighbor_signal">Average neighbor signal: %1$d dBm</string>
@@ -42,13 +42,22 @@
     <string name="settings_default_band_description">The band that will be used by default when the Analyzer screen opens.</string>
     <string name="wifi_band_24ghz">2.4 GHz</string>
     <string name="wifi_band_5ghz">5 GHz</string>
+    <string name="wifi_band_6ghz">6 GHz</string>
     <string name="settings_auto_refresh_title">Auto refresh</string>
     <string name="settings_auto_refresh_description">Automatically refresh Wi-Fi scanning at intervals. This setting applies while the Analyzer screen is open.</string>
     <string name="bar_chart_no_channels">No channels to display for this band.</string>
-    <string name="bar_chart_title_channel_density">Channel density (device count)</string>
+    <string name="bar_chart_title_channel_density">Channel Density</string>
     <string name="error_router_gateway_not_found">No valid gateway was found for the router interface. Please enter the IP address manually in your browser (e.g., 192.168.1.1).</string>
     <string name="error_router_page_open_failed">Failed to open the router interface. Try entering the IP address manually in your browser: %1$s</string>
     <string name="guide_note_remember_restart">Don’t forget to save the changes and, if necessary, restart your modem or Wi-Fi connection.</string>
+
+    <!-- Brand Names -->
+    <string name="router_brand_tp_link">TP-Link</string>
+    <string name="router_brand_asus">ASUS</string>
+    <string name="router_brand_zyxel">Zyxel</string>
+    <string name="router_brand_keenetic">Keenetic</string>
+    <string name="router_brand_huawei">Huawei</string>
+    <string name="router_brand_other">Other</string>
 
     <!-- TP-Link -->
     <string name="guide_step_tplink_1">Open your router interface in a browser (usually 192.168.1.1 or 192.168.0.1).</string>

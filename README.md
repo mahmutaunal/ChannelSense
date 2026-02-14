@@ -94,12 +94,10 @@ ChannelSense:
 
 ## 📱 Screenshots
 
-> (add screenshots here)
-
 <p align="center">
-<img src="screenshots/1.png" width="260"> 
-<img src="screenshots/2.png" width="260"> 
-<img src="screenshots/3.png" width="260">
+<img src="assets/1.png" width="260"> 
+<img src="assets/2.png" width="260"> 
+<img src="assets/3.png" width="260">
 </p>
 
 <br>

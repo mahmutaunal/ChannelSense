@@ -5,7 +5,7 @@
     <string name="cd_info">Bilgi</string>
     <string name="cd_settings">Ayarlar</string>
     <string name="scanning_nearby_networks">Yakındaki WiFi ağları taranıyor…</string>
-    <string name="channels_and_details">Kanallar ve detaylar:</string>
+    <string name="channels_and_details">Kanallar ve Detaylar</string>
     <string name="no_channel_info_try_refresh">Bu bantta kanal bilgisi bulunamadı. \"Yenile\" butonunu kullanarak yeniden deneyebilirsiniz.</string>
     <string name="permission_title_need_permission">WiFi kanallarını analiz edebilmek için izne ihtiyacımız var.</string>
     <string name="permission_body_location_required">Yakındaki WiFi ağlarını ve kanallarını görebilmek için Android, uygulamaların konum tabanlı bir izin istemesini zorunlu kılıyor. Bu izin olmadan hangi kanalların ne kadar yoğun olduğunu göremeyiz.</string>
@@ -21,7 +21,7 @@
     <string name="action_refresh">Yenile</string>
     <string name="recommended_channel_label">Önerilen Kanal</string>
     <string name="recommended_channel_title">Kanal %1$d (%2$s)</string>
-    <string name="tap_for_detailed_guide">Detaylı rehber için dokun.</string>
+    <string name="tap_for_detailed_guide">Detaylı rehber için dokun</string>
     <string name="channel_item_title">Kanal %1$d</string>
     <string name="channel_item_device_count">Cihaz sayısı: %1$d</string>
     <string name="channel_item_average_neighbor_signal">Ortalama komşu sinyali: %1$d dBm</string>
@@ -42,10 +42,11 @@
     <string name="settings_default_band_description">Analyzer ekranı açıldığında başlangıç olarak kullanılacak bant.</string>
     <string name="wifi_band_24ghz">2.4 GHz</string>
     <string name="wifi_band_5ghz">5 GHz</string>
+    <string name="wifi_band_6ghz">6 GHz</string>
     <string name="settings_auto_refresh_title">Otomatik tarama</string>
     <string name="settings_auto_refresh_description">Belirli aralıklarla WiFi taramasını otomatik yenile. Bu ayar Analyzer ekranı açıkken geçerlidir.</string>
     <string name="bar_chart_no_channels">Bu bantta görüntülenecek kanal bulunamadı.</string>
-    <string name="bar_chart_title_channel_density">Kanal yoğunluğu (cihaz sayısı)</string>
+    <string name="bar_chart_title_channel_density">Kanal Yoğunluğu</string>
     <string name="error_router_gateway_not_found">Modem arayüzü için geçerli bir ağ geçidi bulunamadı. Lütfen IP adresini tarayıcıya manuel girin (örneğin 192.168.1.1).</string>
     <string name="error_router_page_open_failed">Modem arayüzü açılamadı. IP adresini tarayıcınıza manuel olarak yazmayı deneyin: %1$s</string>
     <string name="guide_note_remember_restart">Değişiklikleri kaydetmeyi ve gerekirse modemi veya WiFi bağlantınızı yeniden başlatmayı unutmayın.</string>
@@ -57,6 +58,14 @@
     <string name="guide_step_tplink_4">Eğer hem 2.4 GHz hem 5 GHz varsa, değiştirmek istediğiniz bant için ilgili sekmeyi seçin.</string>
     <string name="guide_step_tplink_5">\"Channel\" veya \"Kanal\" alanını bulun ve %1$d numaralı kanalı seçin.</string>
     <string name="guide_step_tplink_6">\"Save\" / \"Apply\" butonu ile ayarları kaydedin.</string>
+
+    <!-- Brand Names -->
+    <string name="router_brand_tp_link">TP-Link</string>
+    <string name="router_brand_asus">ASUS</string>
+    <string name="router_brand_zyxel">Zyxel</string>
+    <string name="router_brand_keenetic">Keenetic</string>
+    <string name="router_brand_huawei">Huawei</string>
+    <string name="router_brand_other">Diğer</string>
 
     <!-- ASUS -->
     <string name="guide_step_asus_1">Tarayıcınızdan modem arayüzüne gidin (genelde 192.168.1.1).</string>

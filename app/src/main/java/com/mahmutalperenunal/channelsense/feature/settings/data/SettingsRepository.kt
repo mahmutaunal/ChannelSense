@@ -17,6 +17,7 @@ object SettingsRepository {
 
     private const val BAND_2_4 = "2_4"
     private const val BAND_5 = "5"
+    private const val BAND_6 = "6"
 
     private lateinit var appContext: Context
 
@@ -37,6 +38,7 @@ object SettingsRepository {
             val band = when (bandString) {
                 BAND_2_4 -> WifiBand.TWO_GHZ
                 BAND_5 -> WifiBand.FIVE_GHZ
+                BAND_6 -> WifiBand.SIX_GHZ
                 else -> WifiBand.TWO_GHZ
             }
 
@@ -58,6 +60,7 @@ object SettingsRepository {
                 defaultBand = when (prefs[Keys.DEFAULT_BAND]) {
                     BAND_2_4 -> WifiBand.TWO_GHZ
                     BAND_5 -> WifiBand.FIVE_GHZ
+                    BAND_6 -> WifiBand.SIX_GHZ
                     else -> WifiBand.TWO_GHZ
                 },
                 autoRefreshEnabled = prefs[Keys.AUTO_REFRESH] ?: false
@@ -68,6 +71,7 @@ object SettingsRepository {
             prefs[Keys.DEFAULT_BAND] = when (newSettings.defaultBand) {
                 WifiBand.TWO_GHZ -> BAND_2_4
                 WifiBand.FIVE_GHZ -> BAND_5
+                WifiBand.SIX_GHZ -> BAND_6
             }
 
             prefs[Keys.AUTO_REFRESH] = newSettings.autoRefreshEnabled

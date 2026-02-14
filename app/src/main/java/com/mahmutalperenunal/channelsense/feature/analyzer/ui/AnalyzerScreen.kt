@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Refresh
 import com.mahmutalperenunal.channelsense.feature.analyzer.AnalyzerViewModel
 import com.mahmutalperenunal.channelsense.ui.components.ChannelBarChart
 import com.mahmutalperenunal.channelsense.wifi.permissions.WifiPermissionHelper
@@ -33,7 +34,7 @@ fun AnalyzerScreen(
 ) {
     val context = LocalContext.current
 
-    var showInfoSheet by remember { mutableStateOf(false) }
+    val showInfoSheet = remember { mutableStateOf(false) }
 
     var hasPermission by remember {
         mutableStateOf(WifiPermissionHelper.hasRequiredPermissions(context))
@@ -58,7 +59,7 @@ fun AnalyzerScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.app_name_channel_analyzer)) },
                 actions = {
-                    IconButton(onClick = {showInfoSheet = true }) {
+                    IconButton(onClick = {showInfoSheet.value = true }) {
                         Icon(
                             imageVector = Icons.Default.Info,
                             contentDescription = stringResource(R.string.cd_info)
@@ -165,16 +166,14 @@ fun AnalyzerScreen(
         }
     }
 
-    if (showInfoSheet) {
+    if (showInfoSheet.value) {
         val sheetState = rememberModalBottomSheetState()
 
         ModalBottomSheet(
-            onDismissRequest = { showInfoSheet = false },
+            onDismissRequest = { showInfoSheet.value = false },
             sheetState = sheetState
         ) {
-            InfoBottomSheetContent(
-                onClose = { showInfoSheet = false }
-            )
+            InfoBottomSheetContent()
         }
     }
 }
@@ -222,9 +221,7 @@ private fun PermissionRationale(
 }
 
 @Composable
-private fun InfoBottomSheetContent(
-    onClose: () -> Unit
-) {
+private fun InfoBottomSheetContent() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -262,17 +259,6 @@ private fun InfoBottomSheetContent(
             text = stringResource(R.string.about_body_router_note),
             style = MaterialTheme.typography.bodyMedium
         )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = onClose,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(stringResource(R.string.action_close))
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
@@ -292,17 +278,25 @@ private fun BandSelector(
             FilterChip(
                 selected = selectedBand == WifiBand.TWO_GHZ,
                 onClick = { onBandSelected(WifiBand.TWO_GHZ) },
-                label = { Text("2.4 GHz") }
+                label = { Text(stringResource(R.string.wifi_band_24ghz)) }
             )
             FilterChip(
                 selected = selectedBand == WifiBand.FIVE_GHZ,
                 onClick = { onBandSelected(WifiBand.FIVE_GHZ) },
-                label = { Text("5 GHz") }
+                label = { Text(stringResource(R.string.wifi_band_5ghz)) }
+            )
+            FilterChip(
+                selected = selectedBand == WifiBand.SIX_GHZ,
+                onClick = { onBandSelected(WifiBand.SIX_GHZ) },
+                label = { Text(stringResource(R.string.wifi_band_6ghz)) }
             )
         }
 
-        OutlinedButton(onClick = onRefresh) {
-            Text(stringResource(R.string.action_refresh))
+        IconButton(onClick = onRefresh) {
+            Icon(
+                imageVector = Icons.Default.Refresh,
+                contentDescription = stringResource(R.string.action_refresh)
+            )
         }
     }
 }
@@ -322,10 +316,10 @@ private fun RecommendedChannelCard(
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = stringResource(R.string.recommended_channel_label),
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(
                     R.string.recommended_channel_title,
@@ -339,10 +333,10 @@ private fun RecommendedChannelCard(
                 text = localizedReasonText(reason),
                 style = MaterialTheme.typography.bodyMedium
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(R.string.tap_for_detailed_guide),
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary
             )
         }
@@ -403,6 +397,7 @@ private fun ChannelItem(
                 text = stringResource(R.string.channel_item_device_count, usage.deviceCount),
                 style = MaterialTheme.typography.bodyMedium
             )
+            Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = stringResource(R.string.channel_item_average_neighbor_signal, usage.averageRssi),
                 style = MaterialTheme.typography.bodySmall,

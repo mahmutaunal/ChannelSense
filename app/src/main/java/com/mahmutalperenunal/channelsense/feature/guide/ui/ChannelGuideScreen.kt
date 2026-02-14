@@ -1,6 +1,8 @@
 package com.mahmutalperenunal.channelsense.feature.guide.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
@@ -76,7 +78,7 @@ fun ChannelGuideScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            ElevatedButton(
+            Button(
                 onClick = { NetworkUtils.openRouterPage(context) },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -108,52 +110,42 @@ private fun RouterBrandSelector(
             style = MaterialTheme.typography.labelMedium
         )
         Spacer(modifier = Modifier.height(8.dp))
-
-        // İki satıra bölelim, sade kalsın
-        Column {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                BrandChip(
-                    brand = RouterBrand.TP_LINK,
-                    selected = selectedBrand == RouterBrand.TP_LINK,
-                    onClick = { onBrandSelected(RouterBrand.TP_LINK) }
-                )
-                BrandChip(
-                    brand = RouterBrand.ASUS,
-                    selected = selectedBrand == RouterBrand.ASUS,
-                    onClick = { onBrandSelected(RouterBrand.ASUS) }
-                )
-                BrandChip(
-                    brand = RouterBrand.ZYXEL,
-                    selected = selectedBrand == RouterBrand.ZYXEL,
-                    onClick = { onBrandSelected(RouterBrand.ZYXEL) }
-                )
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                BrandChip(
-                    brand = RouterBrand.KEENETIC,
-                    selected = selectedBrand == RouterBrand.KEENETIC,
-                    onClick = { onBrandSelected(RouterBrand.KEENETIC) }
-                )
-                BrandChip(
-                    brand = RouterBrand.HUAWEI,
-                    selected = selectedBrand == RouterBrand.HUAWEI,
-                    onClick = { onBrandSelected(RouterBrand.HUAWEI) }
-                )
-                BrandChip(
-                    brand = RouterBrand.OTHER,
-                    selected = selectedBrand == RouterBrand.OTHER,
-                    onClick = { onBrandSelected(RouterBrand.OTHER) }
-                )
-            }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            BrandChip(
+                brand = RouterBrand.TP_LINK,
+                selected = selectedBrand == RouterBrand.TP_LINK,
+                onClick = { onBrandSelected(RouterBrand.TP_LINK) }
+            )
+            BrandChip(
+                brand = RouterBrand.ASUS,
+                selected = selectedBrand == RouterBrand.ASUS,
+                onClick = { onBrandSelected(RouterBrand.ASUS) }
+            )
+            BrandChip(
+                brand = RouterBrand.ZYXEL,
+                selected = selectedBrand == RouterBrand.ZYXEL,
+                onClick = { onBrandSelected(RouterBrand.ZYXEL) }
+            )
+            BrandChip(
+                brand = RouterBrand.KEENETIC,
+                selected = selectedBrand == RouterBrand.KEENETIC,
+                onClick = { onBrandSelected(RouterBrand.KEENETIC) }
+            )
+            BrandChip(
+                brand = RouterBrand.HUAWEI,
+                selected = selectedBrand == RouterBrand.HUAWEI,
+                onClick = { onBrandSelected(RouterBrand.HUAWEI) }
+            )
+            BrandChip(
+                brand = RouterBrand.OTHER,
+                selected = selectedBrand == RouterBrand.OTHER,
+                onClick = { onBrandSelected(RouterBrand.OTHER) }
+            )
         }
     }
 }
@@ -167,7 +159,7 @@ private fun BrandChip(
     FilterChip(
         selected = selected,
         onClick = onClick,
-        label = { Text(brand.displayName) }
+        label = { Text(stringResource(brand.nameRes)) }
     )
 }
 
