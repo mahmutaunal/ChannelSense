@@ -1,7 +1,7 @@
 # ChannelSense – WiFi Analyzer & Guide
 
 > **Analyze WiFi channels, discover crowded channels and find the most optimal one for your network.**  
-> ChannelSense helps you check 2.4 GHz and 5 GHz channel usage around you and provides guidance on how to change the channel in your router settings.
+> ChannelSense helps you check 2.4 GHz, 5 GHz, 6 GHz channel usage around you and provides guidance on how to change the channel in your router settings.
 
 <br>
 
@@ -11,7 +11,7 @@
 ✔ Visual channel usage graph  
 ✔ Recommended channel based on real usage  
 ✔ Shows devices per channel and signal strength  
-✔ Works with both 2.4 GHz and 5 GHz  
+✔ Works with 2.4 GHz, 5 GHz and 5 GHz
 ✔ Tappable channels → Go to detailed guide  
 ✔ Router brand selection (TP-Link, ASUS, Zyxel, Keenetic, Huawei etc.)  
 ✔ Step-by-step instructions for changing router channel  
