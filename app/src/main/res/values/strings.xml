@@ -106,4 +106,43 @@
     <string name="guide_step_generic_4">Open the settings screen for the 2.4 GHz or 5 GHz band.</string>
     <string name="guide_step_generic_5">Find the \"Channel\" field and select channel %1$d.</string>
     <string name="guide_step_generic_6">Apply the settings using \"Save\" / \"Apply\".</string>
+
+    <string name="connected_network">Connected network</string>
+    <string name="not_connected_or_hidden">Not connected or network name unavailable</string>
+    <string name="connected_network_details">Channel %1$d • %2$s</string>
+    <string name="quick_scan">Quick scan</string>
+    <string name="detailed_analysis">Detailed analysis</string>
+    <string name="scan_progress">Measurement %1$d of %2$d</string>
+    <string name="scan_cached_warning">Android may be showing cached scan results.</string>
+    <string name="current_channel_is_good">Your current channel looks suitable</string>
+    <string name="recommendation_reason_access_points">Calculated from %1$d nearby access points using signal strength, channel width and frequency overlap.</string>
+    <string name="recommendation_confidence">Confidence: %1$s • %2$d measurement(s)</string>
+    <string name="alternative_channels">Alternatives: %1$s</string>
+    <string name="channel_item_access_point_count">Detected access points: %1$d</string>
+    <string name="occupancy_percent">Interference %1$d%%</string>
+    <string name="best_candidate">Best candidate</string>
+    <string name="analysis_disclaimer">Recommendations are estimates based on scans visible to this phone. Router support, DFS, walls, client devices and internet service can also affect performance.</string>
+    <string name="problem_permission">Wi-Fi scan permission is required.</string>
+    <string name="problem_wifi_disabled">Wi-Fi is turned off.</string>
+    <string name="problem_location_disabled">Android requires Location Services to be enabled for Wi-Fi scans.</string>
+    <string name="problem_throttled">Android limited the scan request. Wait briefly and try again.</string>
+    <string name="action_fix_or_retry">Fix or retry</string>
+    <string name="confidence_low">Low</string>
+    <string name="confidence_medium">Medium</string>
+    <string name="confidence_high">High</string>
+
+
+    <string name="settings_section_alpware_title">AlpWare Studio</string>
+    <string name="settings_section_about_title">About &amp; Privacy</string>
+    <string name="settings_studio_website_title">AlpWare Studio website</string>
+    <string name="settings_studio_website_description">Discover our privacy-first apps and studio.</string>
+    <string name="settings_more_apps_title">More apps</string>
+    <string name="settings_more_apps_description">View other AlpWare Studio apps on Google Play.</string>
+    <string name="settings_source_code_title">Source code</string>
+    <string name="settings_source_code_description">Review the project, report an issue, or contribute on GitHub.</string>
+    <string name="settings_privacy_policy_title">Privacy policy</string>
+    <string name="settings_privacy_policy_description">Learn how ChannelSense handles permissions and your data.</string>
+    <string name="settings_made_by_alpware">Made with care by AlpWare Studio</string>
+    <string name="settings_link_open_error">No app was found to open this link.</string>
+
 </resources>

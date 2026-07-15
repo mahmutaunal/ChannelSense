@@ -3,6 +3,8 @@ package com.mahmutalperenunal.channelsense.wifi.model
 data class ChannelUsage(
     val channel: Int,
     val band: WifiBand,
-    val deviceCount: Int,
-    val averageRssi: Int
+    val detectedAccessPoints: Int,
+    val averageRssi: Int,
+    val interferenceScore: Double,
+    val occupancyPercent: Int
 )

@@ -106,4 +106,43 @@
     <string name="guide_step_generic_4">2.4 GHz veya 5 GHz bandı için ilgili ayar ekranını açın.</string>
     <string name="guide_step_generic_5">\"Channel\" / \"Kanal\" alanını bulun ve %1$d numaralı kanalı seçin.</string>
     <string name="guide_step_generic_6">\"Save\" / \"Apply\" / \"Kaydet\" butonu ile ayarları uygulayın.</string>
+
+    <string name="connected_network">Bağlı olduğunuz ağ</string>
+    <string name="not_connected_or_hidden">Bağlı değil veya ağ adı alınamadı</string>
+    <string name="connected_network_details">Kanal %1$d • %2$s</string>
+    <string name="quick_scan">Hızlı tarama</string>
+    <string name="detailed_analysis">Detaylı analiz</string>
+    <string name="scan_progress">%1$d / %2$d ölçüm tamamlandı</string>
+    <string name="scan_cached_warning">Android önbelleğe alınmış tarama sonuçlarını gösteriyor olabilir.</string>
+    <string name="current_channel_is_good">Mevcut kanalınız uygun görünüyor</string>
+    <string name="recommendation_reason_access_points">%1$d yakındaki erişim noktası; sinyal gücü, kanal genişliği ve frekans örtüşmesiyle değerlendirildi.</string>
+    <string name="recommendation_confidence">Güven: %1$s • %2$d ölçüm</string>
+    <string name="alternative_channels">Alternatifler: %1$s</string>
+    <string name="channel_item_access_point_count">Algılanan erişim noktası: %1$d</string>
+    <string name="occupancy_percent">Parazit %1$d%%</string>
+    <string name="best_candidate">En uygun aday</string>
+    <string name="analysis_disclaimer">Öneriler bu telefonun görebildiği taramalara dayalı tahminlerdir. Modem desteği, DFS, duvarlar, istemci cihazlar ve internet hizmeti de performansı etkileyebilir.</string>
+    <string name="problem_permission">Wi-Fi tarama izni gereklidir.</string>
+    <string name="problem_wifi_disabled">Wi-Fi kapalı.</string>
+    <string name="problem_location_disabled">Android, Wi-Fi taraması için Konum Hizmetleri’nin açık olmasını gerektiriyor.</string>
+    <string name="problem_throttled">Android tarama isteğini sınırlandırdı. Kısa süre bekleyip tekrar deneyin.</string>
+    <string name="action_fix_or_retry">Düzelt veya yeniden dene</string>
+    <string name="confidence_low">Düşük</string>
+    <string name="confidence_medium">Orta</string>
+    <string name="confidence_high">Yüksek</string>
+
+
+    <string name="settings_section_alpware_title">AlpWare Studio</string>
+    <string name="settings_section_about_title">Hakkında ve Gizlilik</string>
+    <string name="settings_studio_website_title">AlpWare Studio web sitesi</string>
+    <string name="settings_studio_website_description">Gizlilik odaklı uygulamalarımızı ve stüdyomuzu keşfedin.</string>
+    <string name="settings_more_apps_title">Diğer uygulamalar</string>
+    <string name="settings_more_apps_description">AlpWare Studio uygulamalarını Google Play’de görüntüleyin.</string>
+    <string name="settings_source_code_title">Kaynak kodu</string>
+    <string name="settings_source_code_description">Projeyi inceleyin, hata bildirin veya GitHub üzerinden katkıda bulunun.</string>
+    <string name="settings_privacy_policy_title">Gizlilik politikası</string>
+    <string name="settings_privacy_policy_description">ChannelSense’in izinleri ve verilerinizi nasıl ele aldığını öğrenin.</string>
+    <string name="settings_made_by_alpware">AlpWare Studio tarafından özenle geliştirildi</string>
+    <string name="settings_link_open_error">Bu bağlantıyı açabilecek bir uygulama bulunamadı.</string>
+
 </resources>
