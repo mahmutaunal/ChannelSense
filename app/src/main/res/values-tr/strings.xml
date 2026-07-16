@@ -145,4 +145,12 @@
     <string name="settings_made_by_alpware">AlpWare Studio tarafından özenle geliştirildi</string>
     <string name="settings_link_open_error">Bu bağlantıyı açabilecek bir uygulama bulunamadı.</string>
 
+    <string name="quick_scan_in_progress_title">Hızlı tarama yapılıyor</string>
+    <string name="detailed_scan_in_progress_title">Detaylı analiz yapılıyor</string>
+    <string name="scan_in_progress_description">Yakındaki WiFi ağları ölçülüyor. Sonuçlar hazır olduğunda ekran otomatik olarak güncellenecek.</string>
+    <string name="current_channel_good_explanation">Bağlı olduğunuz kanal çevredeki ağlara göre uygun görünüyor. Şimdilik kanal değiştirmeniz gerekmiyor.</string>
+    <string name="recommended_channel_simple_explanation">Bu kanal çevrenizdeki diğer seçeneklere göre daha az yoğun görünüyor ve daha kararlı bir bağlantı sağlayabilir.</string>
+    <string name="recommendation_summary">%1$d yakın ağ incelendi • Güven: %2$s • %3$d ölçüm</string>
+    <string name="alternative_channels_simple">Diğer uygun seçenekler: %1$s</string>
+
 </resources>

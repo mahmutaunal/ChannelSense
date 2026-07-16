@@ -145,4 +145,12 @@
     <string name="settings_made_by_alpware">Made with care by AlpWare Studio</string>
     <string name="settings_link_open_error">No app was found to open this link.</string>
 
+    <string name="quick_scan_in_progress_title">Quick scan in progress</string>
+    <string name="detailed_scan_in_progress_title">Detailed analysis in progress</string>
+    <string name="scan_in_progress_description">Nearby Wi-Fi networks are being measured. The results will update automatically when ready.</string>
+    <string name="current_channel_good_explanation">Your connected channel looks suitable compared with nearby networks. You do not need to change it for now.</string>
+    <string name="recommended_channel_simple_explanation">This channel appears less crowded than nearby alternatives and may provide a more stable connection.</string>
+    <string name="recommendation_summary">%1$d nearby networks checked • Confidence: %2$s • %3$d measurement(s)</string>
+    <string name="alternative_channels_simple">Other suitable options: %1$s</string>
+
 </resources>

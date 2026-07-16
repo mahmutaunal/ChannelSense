@@ -38,7 +38,8 @@ class AnalyzerViewModel(application: Application) : AndroidViewModel(application
     init {
         viewModelScope.launch {
             settingsRepo.ensureInitialized(getApplication())
-            val settings = runCatching { settingsRepo.getCurrentSettings() }.getOrDefault(AppFallbackSettings)
+            val settings =
+                runCatching { settingsRepo.getCurrentSettings() }.getOrDefault(AppFallbackSettings)
             uiState = uiState.copy(selectedBand = settings.defaultBand)
             settingsRepo.settingsFlow.collectLatest { handleAutoRefreshSetting(it.autoRefreshEnabled) }
         }
@@ -71,8 +72,10 @@ class AnalyzerViewModel(application: Application) : AndroidViewModel(application
                     is WifiScanOutcome.Success -> {
                         collected += result.networks
                         cached = cached || !result.fresh
-                        uiState = uiState.copy(completedSamples = index + 1, usesCachedResults = cached)
+                        uiState =
+                            uiState.copy(completedSamples = index + 1, usesCachedResults = cached)
                     }
+
                     WifiScanOutcome.PermissionRequired -> return@launch finishProblem(ScanProblem.PERMISSION)
                     WifiScanOutcome.WifiDisabled -> return@launch finishProblem(ScanProblem.WIFI_DISABLED)
                     WifiScanOutcome.LocationDisabled -> return@launch finishProblem(ScanProblem.LOCATION_DISABLED)
@@ -80,7 +83,10 @@ class AnalyzerViewModel(application: Application) : AndroidViewModel(application
                         if (collected.isEmpty()) return@launch finishProblem(ScanProblem.THROTTLED)
                         cached = true
                     }
-                    is WifiScanOutcome.Failure -> if (collected.isEmpty()) return@launch finishProblem(ScanProblem.UNKNOWN)
+
+                    is WifiScanOutcome.Failure -> if (collected.isEmpty()) return@launch finishProblem(
+                        ScanProblem.UNKNOWN
+                    )
                 }
                 if (index < requested - 1) delay(5_000.milliseconds)
             }
@@ -95,10 +101,11 @@ class AnalyzerViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun recalculate(networks: List<WifiNetworkInfo>, samples: Int) {
-        val aggregated = networks.groupBy { it.bssid ?: "${it.ssid}-${it.frequency}" }.map { (_, values) ->
-            val latest = values.maxByOrNull { it.timestampMicros } ?: values.first()
-            latest.copy(rssi = values.map { it.rssi }.average().toInt())
-        }
+        val aggregated =
+            networks.groupBy { it.bssid ?: "${it.ssid}-${it.frequency}" }.map { (_, values) ->
+                val latest = values.maxByOrNull { it.timestampMicros } ?: values.first()
+                latest.copy(rssi = values.map { it.rssi }.average().toInt())
+            }
         if (aggregated.isNotEmpty()) lastNetworks = aggregated
         val connected = connectedWifiProvider.current()
         val analysis = ChannelAnalyzer.analyze(
@@ -122,7 +129,9 @@ class AnalyzerViewModel(application: Application) : AndroidViewModel(application
         autoRefreshJob?.cancel()
         if (!enabled) return
         autoRefreshJob = viewModelScope.launch {
-            while (true) { delay(60_000.milliseconds); onRefreshRequested(ScanMode.QUICK) }
+            while (true) {
+                delay(60_000.milliseconds); onRefreshRequested(ScanMode.QUICK)
+            }
         }
     }
 
