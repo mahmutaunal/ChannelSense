@@ -60,7 +60,7 @@ import androidx.core.net.toUri
 
 private const val STUDIO_WEBSITE_URL = "https://www.alpwarestudio.com/"
 private const val SOURCE_CODE_URL = "https://github.com/mahmutaunal/ChannelSense"
-private const val PRIVACY_POLICY_URL = "https://github.com/mahmutaunal/ChannelSense/blob/main/PRIVACY.md"
+private const val PRIVACY_POLICY_URL = "https://mahmutaunal.github.io/ChannelSense/"
 private const val MORE_APPS_URL = "https://play.google.com/store/apps/dev?id=5245599652065968716"
 
 @OptIn(ExperimentalMaterial3Api::class)
