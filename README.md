@@ -8,6 +8,7 @@
 
 Find the best Wi-Fi channel using **real interference analysis** instead of simply counting nearby networks.
 
+[![Google Play](https://img.shields.io/badge/Google_Play-Download-success?logo=google-play)]([https://play.google.com/store/apps/details?id=com.alpwarestudio.wakeon](https://play.google.com/store/apps/details?id=com.mahmutalperenunal.channelsense&pli=1))
 [![Android](https://img.shields.io/badge/Android-9%2B-brightgreen.svg)]()
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.4-blue.svg)]()
 [![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-orange.svg)]()
