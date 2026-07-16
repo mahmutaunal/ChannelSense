@@ -58,7 +58,11 @@ fun AnalyzerScreen(
                 actions = {
                     IconButton(onClick = { showInfo = true }) { Icon(Icons.Default.Info, stringResource(R.string.cd_info)) }
                     IconButton(onClick = onOpenSettings) { Icon(Icons.Default.Settings, stringResource(R.string.cd_settings)) }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    scrolledContainerColor = MaterialTheme.colorScheme.background
+                )
             )
         }
     ) { padding ->
