@@ -1,8 +1,8 @@
 # WiSense Privacy Policy / WiSense Gizlilik Politikası
 
 **Effective date / Yürürlük tarihi:** July 16, 2026 / 16 Temmuz 2026  
-**Developer / Geliştirici:** Mahmut Alperen Ünal (Alpware Studio)  
-**Contact / İletişim:** mahmutalperenunal@gmail.com
+**Developer / Geliştirici:** Alpware Studio
+**Contact / İletişim:** contact@alpwarestudio.com
 
 ---
 
@@ -207,5 +207,5 @@ WiSense'in özellikleri, izinleri, üçüncü taraf hizmetleri veya veri uygulam
 
 Bu Gizlilik Politikasıyla ilgili soru, gizlilik talebi veya başvurularınız için:
 
-**Mahmut Alperen Ünal (Alpware Studio)**  
-**E-posta:** mahmutalperenunal@gmail.com
+**Alpware Studio**  
+**E-posta:** contact@alpwarestudio.com
