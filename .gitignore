@@ -1,0 +1,108 @@
+# ============================================================
+# ChannelSense - Android / Kotlin / Jetpack Compose
+# ============================================================
+
+# --- Android Studio / IntelliJ IDEA ---
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# --- Gradle / Kotlin caches ---
+.gradle/
+.kotlin/
+**/.gradle/
+
+# --- Build outputs ---
+build/
+**/build/
+
+# Android package and release artifacts
+*.apk
+*.aab
+*.apks
+*.aar
+*.dex
+*.dm
+output-metadata.json
+
+# Generated release folders
+**/release/
+
+# Baseline/Profile Installer generated outputs
+**/baselineProfiles/
+**/generated/baselineProfiles/
+
+# --- Local SDK and machine-specific configuration ---
+local.properties
+
+# --- Signing credentials and private keys ---
+keystore.properties
+signing.properties
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+
+# --- Secrets / service configuration ---
+secrets.properties
+secrets.defaults.properties
+*.secrets.properties
+google-services.json
+service-account*.json
+firebase-service-account*.json
+
+# Keep public/example configuration files
+!*.example
+!*.example.*
+!*.sample
+!*.sample.*
+
+# --- Native build outputs ---
+.externalNativeBuild/
+.cxx/
+obj/
+
+# --- Android Studio generated files ---
+captures/
+.navigation/
+
+# --- Test / coverage / profiling outputs ---
+coverage/
+*.ec
+*.exec
+*.hprof
+
+# --- Logs and temporary files ---
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# --- Operating-system files ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+Desktop.ini
+
+# --- CI / tooling caches ---
+.lint/
+.cache/
+
+# --- Fastlane generated artifacts (if added later) ---
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# --- Environment files ---
+.env
+.env.*
+!.env.example
