@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">ChannelSense</string>
+    <string name="app_name">WiSense</string>
     <string name="reason_least_neighbors">Bu bantta en az komşu ağa sahip kanal. Cihaz sayısı: %1$d, ortalama komşu sinyali: %2$d dBm.</string>
-    <string name="app_name_channel_analyzer">ChannelSense</string>
+    <string name="app_name_channel_analyzer">WiSense</string>
     <string name="cd_info">Bilgi</string>
     <string name="cd_settings">Ayarlar</string>
     <string name="scanning_nearby_networks">Yakındaki WiFi ağları taranıyor…</string>
@@ -11,8 +11,8 @@
     <string name="permission_body_location_required">Yakındaki WiFi ağlarını ve kanallarını görebilmek için Android, uygulamaların konum tabanlı bir izin istemesini zorunlu kılıyor. Bu izin olmadan hangi kanalların ne kadar yoğun olduğunu göremeyiz.</string>
     <string name="permission_body_privacy_note">İzin sadece WiFi taraması için kullanılır ve cihazınızdan herhangi bir konum kaydı tutulmaz.</string>
     <string name="permission_button_grant_and_scan">İzin ver ve taramaya başla</string>
-    <string name="permission_footer_settings_path">Eğer daha önce izni reddettiyseniz, Ayarlar &gt; Uygulamalar &gt; ChannelSense &gt; İzinler menüsünden de değiştirebilirsiniz.</string>
-    <string name="about_title">ChannelSense hakkında</string>
+    <string name="permission_footer_settings_path">Eğer daha önce izni reddettiyseniz, Ayarlar &gt; Uygulamalar &gt; WiSense &gt; İzinler menüsünden de değiştirebilirsiniz.</string>
+    <string name="about_title">WiSense hakkında</string>
     <string name="about_body_what_it_does">Bu uygulama çevredeki WiFi ağlarını tarayıp kullandıkları kanalları analiz eder. Sizin bağlantınızı daha hızlı ve daha stabil hale getirmek için hangi kanalı seçmeniz gerektiğini önerir.</string>
     <string name="about_body_why_permission">Android, WiFi taramasını konum bilgisi gibi değerlendirdiği için, bu işlemi yapabilmek adına izin istememiz zorunludur.</string>
     <string name="about_body_privacy">Bu uygulama konumunuzu kaydetmez, sunuculara göndermez veya reklam amaçlı kullanmaz. Tüm işlem cihazınızda gerçekleşir.</string>
@@ -37,7 +37,7 @@
     <string name="settings_title">Ayarlar</string>
     <string name="settings_section_wifi_analyzer_title">WiFi Analyzer</string>
     <string name="settings_section_wifi_analyzer_subtitle">Varsayılan bant ve tarama davranışı</string>
-    <string name="settings_app_version">ChannelSense – WiFi Analyzer v%1$s</string>
+    <string name="settings_app_version">WiSense – WiFi Analyzer v%1$s</string>
     <string name="settings_default_band_title">Varsayılan WiFi bandı</string>
     <string name="settings_default_band_description">Analyzer ekranı açıldığında başlangıç olarak kullanılacak bant.</string>
     <string name="wifi_band_24ghz">2.4 GHz</string>
@@ -141,7 +141,7 @@
     <string name="settings_source_code_title">Kaynak kodu</string>
     <string name="settings_source_code_description">Projeyi inceleyin, hata bildirin veya GitHub üzerinden katkıda bulunun.</string>
     <string name="settings_privacy_policy_title">Gizlilik politikası</string>
-    <string name="settings_privacy_policy_description">ChannelSense’in izinleri ve verilerinizi nasıl ele aldığını öğrenin.</string>
+    <string name="settings_privacy_policy_description">WiSense’in izinleri ve verilerinizi nasıl ele aldığını öğrenin.</string>
     <string name="settings_made_by_alpware">AlpWare Studio tarafından özenle geliştirildi</string>
     <string name="settings_link_open_error">Bu bağlantıyı açabilecek bir uygulama bulunamadı.</string>
 

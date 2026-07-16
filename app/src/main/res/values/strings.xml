@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">ChannelSense</string>
+    <string name="app_name">WiSense</string>
     <string name="reason_least_neighbors">Channel with the fewest neighboring networks on this band. Device count: %1$d, average neighbor signal: %2$d dBm.</string>
-    <string name="app_name_channel_analyzer">ChannelSense</string>
+    <string name="app_name_channel_analyzer">WiSense</string>
     <string name="cd_info">Info</string>
     <string name="cd_settings">Settings</string>
     <string name="scanning_nearby_networks">Scanning nearby Wi-Fi networks…</string>
@@ -11,8 +11,8 @@
     <string name="permission_body_location_required">To show nearby Wi-Fi networks and channels, Android requires apps to request a location-based permission. Without it, we can’t determine channel congestion.</string>
     <string name="permission_body_privacy_note">This permission is used only for Wi-Fi scanning, and no location data is stored on your device.</string>
     <string name="permission_button_grant_and_scan">Grant permission and start scanning</string>
-    <string name="permission_footer_settings_path">If you previously denied the permission, you can change it from Settings &gt; Apps &gt; ChannelSense &gt; Permissions.</string>
-    <string name="about_title">About ChannelSense</string>
+    <string name="permission_footer_settings_path">If you previously denied the permission, you can change it from Settings &gt; Apps &gt; WiSense &gt; Permissions.</string>
+    <string name="about_title">About WiSense</string>
     <string name="about_body_what_it_does">This app scans nearby Wi-Fi networks and analyzes the channels they use. It suggests which channel you should choose to make your connection faster and more stable.</string>
     <string name="about_body_why_permission">Because Android treats Wi-Fi scanning as location-related, we must request permission to perform this action.</string>
     <string name="about_body_privacy">This app does not store your location, send it to servers, or use it for advertising. All processing happens on your device.</string>
@@ -37,7 +37,7 @@
     <string name="settings_title">Settings</string>
     <string name="settings_section_wifi_analyzer_title">WiFi Analyzer</string>
     <string name="settings_section_wifi_analyzer_subtitle">Default band and scanning behavior</string>
-    <string name="settings_app_version">ChannelSense – WiFi Analyzer v%1$s</string>
+    <string name="settings_app_version">WiSense – WiFi Analyzer v%1$s</string>
     <string name="settings_default_band_title">Default Wi-Fi band</string>
     <string name="settings_default_band_description">The band that will be used by default when the Analyzer screen opens.</string>
     <string name="wifi_band_24ghz">2.4 GHz</string>
@@ -141,7 +141,7 @@
     <string name="settings_source_code_title">Source code</string>
     <string name="settings_source_code_description">Review the project, report an issue, or contribute on GitHub.</string>
     <string name="settings_privacy_policy_title">Privacy policy</string>
-    <string name="settings_privacy_policy_description">Learn how ChannelSense handles permissions and your data.</string>
+    <string name="settings_privacy_policy_description">Learn how WiSense handles permissions and your data.</string>
     <string name="settings_made_by_alpware">Made with care by AlpWare Studio</string>
     <string name="settings_link_open_error">No app was found to open this link.</string>
 
