@@ -20,14 +20,50 @@ object FrequencyUtils {
     }
 
     fun frequencyForChannel(channel: Int, band: WifiBand): Int? = when (band) {
-        WifiBand.TWO_GHZ -> when (channel) { 14 -> 2484; in 1..13 -> 2407 + channel * 5; else -> null }
-        WifiBand.FIVE_GHZ -> if (channel in 1..196) 5000 + channel * 5 else null
+        WifiBand.TWO_GHZ -> when {
+            channel == 14 -> 2484
+            channel in 1..13 -> 2407 + channel * 5
+            else -> null
+        }
+        WifiBand.FIVE_GHZ -> when {
+            channel in 183..196 -> 4000 + channel * 5 // 4.9 GHz public-safety allocation
+            channel in 1..177 -> 5000 + channel * 5
+            else -> null
+        }
         WifiBand.SIX_GHZ -> if (channel in 1..233) 5950 + channel * 5 else null
     }
 
-    fun candidateChannels(band: WifiBand): List<Int> = when (band) {
-        WifiBand.TWO_GHZ -> listOf(1, 6, 11)
-        WifiBand.FIVE_GHZ -> listOf(36, 40, 44, 48, 149, 153, 157, 161)
-        WifiBand.SIX_GHZ -> listOf(5, 21, 37, 53, 69, 85, 101, 117, 133, 149, 165, 181, 197, 213, 229)
+    /**
+     * Complete 20 MHz channel plan used by the analyzer UI.
+     *
+     * Availability is ultimately determined by the device firmware and its regulatory domain.
+     * Observed channels are always merged into this plan by [displayChannels], so a valid scan
+     * result can never be silently discarded merely because it is absent from this baseline.
+     */
+    private fun standardChannels(band: WifiBand): List<Int> = when (band) {
+        WifiBand.TWO_GHZ -> (1..14).toList()
+        WifiBand.FIVE_GHZ -> buildList {
+            addAll((36..64 step 4).toList())
+            addAll((100..144 step 4).toList())
+            addAll((149..177 step 4).toList())
+        }
+        WifiBand.SIX_GHZ -> (1..233 step 4).toList()
     }
+
+    fun displayChannels(band: WifiBand, observedChannels: Collection<Int> = emptyList()): List<Int> =
+        (standardChannels(band) + observedChannels)
+            .distinct()
+            .filter { frequencyForChannel(it, band) != null }
+            .sorted()
+
+    /**
+     * Channels used for recommendations. The UI still displays every channel from [displayChannels].
+     * On 2.4 GHz, recommending the conventional non-overlapping 20 MHz set avoids misleading users.
+     */
+    fun candidateChannels(band: WifiBand, observedChannels: Collection<Int> = emptyList()): List<Int> =
+        when (band) {
+            WifiBand.TWO_GHZ -> listOf(1, 6, 11)
+            WifiBand.FIVE_GHZ -> displayChannels(band, observedChannels)
+            WifiBand.SIX_GHZ -> (5..229 step 16).toList()
+        }
 }

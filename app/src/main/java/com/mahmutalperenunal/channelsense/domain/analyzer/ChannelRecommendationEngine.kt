@@ -24,10 +24,10 @@ object ChannelRecommendationEngine {
         currentChannel: Int? = null
     ): Analysis {
         val observed = networks.filter { it.band == band }
-        if (observed.isEmpty()) return Analysis(emptyList(), null)
-
-        val candidates = FrequencyUtils.candidateChannels(band)
-        val rawScores = candidates.associateWith { candidate ->
+        val observedChannels = observed.map { it.channel }
+        val channels = FrequencyUtils.displayChannels(band, observedChannels)
+        val candidates = FrequencyUtils.candidateChannels(band, observedChannels)
+        val rawScores = channels.associateWith { candidate ->
             val candidateFrequency = FrequencyUtils.frequencyForChannel(candidate, band) ?: return@associateWith Double.MAX_VALUE
             observed.sumOf { accessPoint ->
                 interferenceContribution(candidateFrequency, accessPoint)
@@ -36,7 +36,7 @@ object ChannelRecommendationEngine {
         val finiteScores = rawScores.filterValues { it.isFinite() && it < Double.MAX_VALUE }
         val maxScore = finiteScores.values.maxOrNull()?.coerceAtLeast(0.01) ?: 1.0
 
-        val usages = candidates.mapNotNull { candidate ->
+        val usages = channels.mapNotNull { candidate ->
             val frequency = FrequencyUtils.frequencyForChannel(candidate, band) ?: return@mapNotNull null
             val nearby = observed.filter { accessPoint ->
                 frequencyOverlapRatio(frequency, 20, accessPoint.centerFrequencyMhz, accessPoint.channelWidthMhz) > 0.0
@@ -52,7 +52,10 @@ object ChannelRecommendationEngine {
             )
         }
 
-        val ranked = usages.sortedBy { it.interferenceScore }
+        if (observed.isEmpty()) return Analysis(usages, null)
+
+        val candidateSet = candidates.toSet()
+        val ranked = usages.filter { it.channel in candidateSet }.sortedBy { it.interferenceScore }
         val best = ranked.firstOrNull() ?: return Analysis(usages, null)
         val second = ranked.getOrNull(1)
         val margin = if (second == null || second.interferenceScore <= 0.0) 1.0
