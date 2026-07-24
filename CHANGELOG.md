@@ -19,3 +19,18 @@
 - Added deterministic recommendation-engine unit tests.
 - Corrected user terminology from “device count” to “detected access points.”
 - Added store-ready privacy and project documentation.
+
+## 1.2.0 (6)
+
+- Added Google Play In-App Review support from Settings.
+- Added automatic and manual Google Play In-App Update checks.
+- Added flexible update download completion and immediate update recovery.
+- Added Turkish and English user-facing messages for Play flows.
+
+## 1.2.1
+
+- Added a privacy-friendly, local engagement policy for automatic Google Play in-app review prompts.
+- Automatic review eligibility now requires repeated successful scans, multiple sessions, sufficient time since first use, and use of either detailed analysis or the channel guide.
+- Added a 120-day cooldown and a maximum of two automatic attempts to avoid interrupting users repeatedly.
+- Kept the explicit “Rate ChannelSense” action in Settings available at all times.
+- Added unit coverage for the review eligibility policy.

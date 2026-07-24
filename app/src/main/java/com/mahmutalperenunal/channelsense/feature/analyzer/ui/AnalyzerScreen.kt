@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,11 +34,13 @@ import com.mahmutalperenunal.channelsense.wifi.permissions.WifiPermissionHelper
 fun AnalyzerScreen(
     onChannelSelected: (Int) -> Unit,
     onOpenSettings: () -> Unit,
+    onSuccessfulScan: (Boolean) -> Unit,
     viewModel: AnalyzerViewModel = viewModel()
 ) {
     val context = LocalContext.current
     val state = viewModel.uiState
     var showInfo by remember { mutableStateOf(false) }
+    var lastTrackedScanEpochMillis by rememberSaveable { mutableStateOf<Long?>(null) }
     var hasPermission by remember {
         mutableStateOf(
             WifiPermissionHelper.hasRequiredPermissions(
@@ -54,6 +57,20 @@ fun AnalyzerScreen(
     LaunchedEffect(hasPermission) {
         if (hasPermission && state.lastScanEpochMillis == null && !state.isScanning) {
             viewModel.onRefreshRequested(ScanMode.QUICK)
+        }
+    }
+
+    // A changed completion timestamp means a scan finished successfully. This survives
+    // recomposition without counting the same result more than once.
+    LaunchedEffect(state.lastScanEpochMillis) {
+        val completedAt = state.lastScanEpochMillis
+        if (
+            completedAt != null &&
+            completedAt != lastTrackedScanEpochMillis &&
+            state.recommendation != null
+        ) {
+            lastTrackedScanEpochMillis = completedAt
+            onSuccessfulScan(state.scanMode == ScanMode.DETAILED)
         }
     }
 

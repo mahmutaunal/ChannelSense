@@ -15,6 +15,8 @@ datastorePreferences = "1.2.1"
 material = "1.14.0"
 splashscreen = "1.2.0"
 accompanist = "0.36.0"
+playReview = "2.0.2"
+playUpdate = "2.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +40,8 @@ androidx-datastore-preferences = { group = "androidx.datastore", name = "datasto
 material = { module = "com.google.android.material:material", version.ref = "material" }
 splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
+play-review = { module = "com.google.android.play:review", version.ref = "playReview" }
+play-update = { module = "com.google.android.play:app-update", version.ref = "playUpdate" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

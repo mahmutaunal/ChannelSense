@@ -23,6 +23,8 @@ import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.PrivacyTip
+import androidx.compose.material.icons.filled.RateReview
+import androidx.compose.material.icons.filled.SystemUpdate
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -67,6 +69,8 @@ private const val MORE_APPS_URL = "https://play.google.com/store/apps/dev?id=524
 @Composable
 fun SettingsScreen(
     onBackClick: () -> Unit,
+    onCheckForUpdate: () -> Unit,
+    onRequestReview: () -> Unit,
     viewModel: SettingsViewModel = viewModel()
 ) {
     val state = viewModel.uiState
@@ -137,6 +141,24 @@ fun SettingsScreen(
                         title = stringResource(R.string.settings_more_apps_title),
                         subtitle = stringResource(R.string.settings_more_apps_description),
                         onClick = { openLink(MORE_APPS_URL) }
+                    )
+                }
+            }
+
+            item {
+                SettingsSection(title = stringResource(R.string.settings_section_support_title)) {
+                    ActionRow(
+                        icon = Icons.Default.RateReview,
+                        title = stringResource(R.string.settings_rate_app_title),
+                        subtitle = stringResource(R.string.settings_rate_app_description),
+                        onClick = onRequestReview
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    ActionRow(
+                        icon = Icons.Default.SystemUpdate,
+                        title = stringResource(R.string.settings_check_update_title),
+                        subtitle = stringResource(R.string.settings_check_update_description),
+                        onClick = onCheckForUpdate
                     )
                 }
             }
@@ -298,6 +320,31 @@ private fun AutoRefreshSettingRow(
                 onCheckedChange = onToggle
             )
         },
+        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+    )
+}
+
+
+@Composable
+private fun ActionRow(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit
+) {
+    ListItem(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        headlineContent = { Text(title) },
+        supportingContent = {
+            Text(
+                text = subtitle,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        leadingContent = { SettingIcon(icon) },
         colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
     )
 }

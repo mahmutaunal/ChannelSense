@@ -12,7 +12,11 @@ import com.mahmutalperenunal.channelsense.feature.settings.ui.SettingsScreen
 
 @Composable
 fun ChannelSenseNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    onCheckForUpdate: () -> Unit,
+    onRequestReview: () -> Unit,
+    onSuccessfulScan: (Boolean) -> Unit,
+    onGuideOpened: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -21,11 +25,13 @@ fun ChannelSenseNavGraph(
         composable(route = Destinations.ANALYZER) {
             AnalyzerScreen(
                 onChannelSelected = { channel ->
+                    onGuideOpened()
                     navController.navigate("guide/$channel")
                 },
                 onOpenSettings = {
                     navController.navigate(Destinations.SETTINGS)
-                }
+                },
+                onSuccessfulScan = onSuccessfulScan
             )
         }
 
@@ -46,7 +52,9 @@ fun ChannelSenseNavGraph(
 
         composable(route = Destinations.SETTINGS) {
             SettingsScreen(
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                onCheckForUpdate = onCheckForUpdate,
+                onRequestReview = onRequestReview
             )
         }
     }

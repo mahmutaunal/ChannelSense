@@ -153,4 +153,21 @@
     <string name="recommendation_summary">%1$d yakın ağ incelendi • Güven: %2$s • %3$d ölçüm</string>
     <string name="alternative_channels_simple">Diğer uygun seçenekler: %1$s</string>
 
+    <string name="settings_section_support_title">Destek ve Güncellemeler</string>
+    <string name="settings_rate_app_title">ChannelSense’i değerlendir</string>
+    <string name="settings_rate_app_description">Uygulamadan ayrılmadan görüşlerini güvenli şekilde paylaş.</string>
+    <string name="settings_check_update_title">Güncellemeleri denetle</string>
+    <string name="settings_check_update_description">Google Play’de yeni sürüm olup olmadığını kontrol et ve uygulama içinde yükle.</string>
+    <string name="review_flow_completed">ChannelSense’e destek olduğun için teşekkürler.</string>
+    <string name="review_flow_unavailable">Değerlendirme ekranı şu anda kullanılamıyor. Lütfen daha sonra tekrar dene.</string>
+    <string name="update_not_available">Zaten en güncel sürümü kullanıyorsun.</string>
+    <string name="update_cancelled">Güncelleme iptal edildi.</string>
+    <string name="update_ready_title">Güncelleme hazır</string>
+    <string name="update_ready_message">Güncelleme indirildi. Kurulumu tamamlamak için ChannelSense’i yeniden başlat.</string>
+    <string name="update_restart_now">Şimdi yeniden başlat</string>
+    <string name="update_restart_later">Daha sonra</string>
+    <string name="update_check_failed">Güncellemeler kontrol edilemedi. Bağlantını kontrol edip tekrar dene.</string>
+    <string name="update_not_supported">Google Play bu cihazda uygulama içi güncellemeyi başlatamıyor.</string>
+    <string name="update_error">Güncelleme başlatılamadı. Lütfen daha sonra tekrar dene.</string>
+
 </resources>

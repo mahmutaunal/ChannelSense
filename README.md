@@ -337,3 +337,13 @@ If you find this project useful:
 ---
 
 Made with ❤️ using Kotlin and Jetpack Compose.
+
+## Google Play integrations
+
+ChannelSense uses the dedicated Google Play Core libraries for in-app reviews and in-app updates. The Play-specific implementation lives under `play/` so the UI and application features remain decoupled from Google Play APIs.
+
+> In-app review and update flows must be tested with a Google Play-installed build. For update testing, use Play Console Internal App Sharing or an internal testing track with a higher `versionCode`.
+
+### Context-aware in-app review
+
+ChannelSense does not ask for a rating on first launch. The automatic Google Play review flow becomes eligible only after meaningful use: repeated successful scans, multiple sessions, at least two days since first use, and exploration of detailed analysis or the channel guide. All counters remain on-device; no analytics or Wi-Fi data is transmitted. A long cooldown and a strict attempt limit prevent repeated interruptions. The manual rating action remains available in Settings.
