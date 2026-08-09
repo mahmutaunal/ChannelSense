@@ -78,6 +78,12 @@ The result is a recommendation that better reflects real wireless conditions.
 - Channel utilization graph
 - Alternative channel recommendations
 - Confidence indicator
+- Explainable Wi-Fi connection quality score
+- Phone-to-router receive/transmit link speeds and Wi-Fi standard
+
+### Connection quality
+
+The connected-network card combines signal strength (45%), negotiated phone-to-router link speed (30%), and an absolute estimate derived from current-channel RF interference (25%) into a local 0–100 quality score. It reports the dominant limiting factor and keeps link speed clearly separate from internet throughput. Missing device telemetry receives a neutral value rather than incorrectly lowering the score. No test files are downloaded and no network measurement is sent off-device.
 
 ---
 
@@ -120,6 +126,25 @@ Features include:
 - Gateway detection
 - Open router admin page directly
 - Channel configuration instructions
+
+---
+
+## Personalization
+
+- System, light, and dark theme modes
+- Material You dynamic colors on Android 12 and newer
+- Branded light and dark color fallback on older Android versions
+- In-app language selection for Turkish, English, or the system default
+- Persistent preferences that apply immediately
+
+---
+
+## Optional Background Monitoring
+
+- Disabled by default to protect battery life
+- User-selectable monitoring and notification intervals
+- Local congestion checks with network, channel, density, and recommendation details
+- Android notification and background-work controls respected
 
 ---
 
@@ -295,13 +320,11 @@ please open an Issue or submit a Pull Request.
 
 Future ideas include:
 
-- Material You dynamic color
 - Tablet optimization
 - Foldable support
 - Better visualization
 - Export scan results
 - Historical comparison
-- Automatic periodic scans
 - More router setup guides
 - Improved DFS awareness
 
@@ -343,6 +366,12 @@ Made with ❤️ using Kotlin and Jetpack Compose.
 ChannelSense uses the dedicated Google Play Core libraries for in-app reviews and in-app updates. The Play-specific implementation lives under `play/` so the UI and application features remain decoupled from Google Play APIs.
 
 > In-app review and update flows must be tested with a Google Play-installed build. For update testing, use Play Console Internal App Sharing or an internal testing track with a higher `versionCode`.
+
+The app checks for updates once at startup and also offers a manual action in Settings. Normal releases use a flexible background download. Releases with Play priority 4 or higher, or releases available for at least seven days, use an immediate update when Google Play permits it. Installation remains fully managed by Google Play; ChannelSense never downloads APK files from a project-controlled server.
+
+### Optional congestion monitoring
+
+Background congestion monitoring is disabled by default. Users can opt in from Settings and choose a maximum alert frequency of 30 minutes, 1 hour, 3 hours, or 6 hours. WorkManager performs inexact, battery-aware checks and skips work while the battery is low. A notification is shown only when the connected channel reaches at least 75% estimated congestion and the recommendation engine identifies a better channel. Android may delay work or throttle Wi-Fi scans. Android 10+ also requires background location access because the operating system classifies Wi-Fi scan results as location-sensitive; no physical location or scan result leaves the device.
 
 ### Context-aware in-app review
 

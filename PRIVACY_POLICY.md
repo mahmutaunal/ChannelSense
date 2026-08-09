@@ -1,6 +1,6 @@
 # WiSense Privacy Policy / WiSense Gizlilik Politikası
 
-**Effective date / Yürürlük tarihi:** July 16, 2026 / 16 Temmuz 2026  
+**Effective date / Yürürlük tarihi:** August 9, 2026 / 9 Ağustos 2026
 **Developer / Geliştirici:** Alpware Studio
 **Contact / İletişim:** contact@alpwarestudio.com
 
@@ -32,6 +32,8 @@ WiSense may request or use the following Android permissions:
 
 - **Nearby Wi-Fi devices:** Used to discover and analyze nearby Wi-Fi networks on supported Android versions.
 - **Precise or approximate location:** Used only where required by the Android operating system to obtain Wi-Fi scan results on certain Android versions.
+- **Background location:** Requested only if you explicitly enable optional Wi-Fi congestion alerts. Android classifies background Wi-Fi scanning as background location access. It is used solely to analyze nearby channels on-device at your chosen interval and is disabled by default.
+- **Notifications:** Used only if you enable optional congestion alerts, so WiSense can warn you when the connected channel is heavily congested.
 - **Wi-Fi state:** Used to read Wi-Fi connection and scan information.
 - **Change Wi-Fi state:** Used to initiate Wi-Fi scans where permitted by Android.
 - **Network state:** Used to determine network connectivity.
@@ -135,6 +137,8 @@ WiSense aşağıdaki Android izinlerini isteyebilir veya kullanabilir:
 
 - **Yakındaki Wi-Fi cihazları:** Desteklenen Android sürümlerinde yakındaki Wi-Fi ağlarını bulmak ve analiz etmek için kullanılır.
 - **Kesin veya yaklaşık konum:** Yalnızca bazı Android sürümlerinde işletim sisteminin Wi-Fi tarama sonuçlarını sunmak için zorunlu tuttuğu durumlarda kullanılır.
+- **Arka plan konumu:** Yalnızca isteğe bağlı WiFi yoğunluk bildirimlerini açıkça etkinleştirirseniz talep edilir. Android, arka plan WiFi taramasını arka plan konum erişimi olarak sınıflandırır. Yalnızca seçtiğiniz aralıkta çevredeki kanalları cihaz üzerinde analiz etmek için kullanılır ve varsayılan olarak kapalıdır.
+- **Bildirimler:** Yalnızca isteğe bağlı yoğunluk bildirimlerini etkinleştirirseniz, bağlı olduğunuz kanal çok yoğun olduğunda sizi uyarmak için kullanılır.
 - **Wi-Fi durumu:** Wi-Fi bağlantı ve tarama bilgilerini okumak için kullanılır.
 - **Wi-Fi durumunu değiştirme:** Android'in izin verdiği durumlarda Wi-Fi taramasını başlatmak için kullanılır.
 - **Ağ durumu:** Ağ bağlantısının durumunu belirlemek için kullanılır.

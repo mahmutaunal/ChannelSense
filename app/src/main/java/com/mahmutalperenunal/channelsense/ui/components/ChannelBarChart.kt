@@ -25,20 +25,35 @@ fun ChannelBarChart(
     maxBarHeight: Dp = 120.dp,
     onChannelClick: (ChannelUsage) -> Unit
 ) {
-    OutlinedCard(
+    ElevatedCard(
         modifier = modifier,
-        colors = CardDefaults.outlinedCardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        ),
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 0.dp)
     ) {
         Column(Modifier
             .fillMaxSize()
             .padding(14.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    stringResource(R.string.bar_chart_title_channel_density),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                recommendedChannel?.let {
+                    StatusBadge(text = stringResource(R.string.chart_best_channel, it))
+                }
+            }
             Text(
-                stringResource(R.string.bar_chart_title_channel_density),
-                style = MaterialTheme.typography.titleSmall
+                text = stringResource(R.string.chart_density_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(14.dp))
             if (channels.isEmpty()) Box(
                 Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -49,12 +64,12 @@ fun ChannelBarChart(
                     .horizontalScroll(rememberScrollState())
                     .height(maxBarHeight + 62.dp),
                 verticalAlignment = Alignment.Bottom,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(14.dp)
             ) {
                 channels.forEach { usage ->
                     Column(
                         Modifier
-                            .width(34.dp)
+                            .width(38.dp)
                             .clickable { onChannelClick(usage) },
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -65,15 +80,21 @@ fun ChannelBarChart(
                         Box(
                             Modifier
                                 .height(maxBarHeight)
-                                .width(22.dp),
+                                .width(26.dp),
                             contentAlignment = Alignment.BottomCenter
                         ) {
                             Box(
                                 Modifier
                                     .fillMaxWidth()
                                     .height((maxBarHeight * (usage.occupancyPercent.coerceAtLeast(4) / 100f)))
-                                    .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
-                                    .background(if (usage.channel == recommendedChannel) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(
+                                        when {
+                                            usage.channel == recommendedChannel -> MaterialTheme.colorScheme.primary
+                                            usage.occupancyPercent >= 75 -> MaterialTheme.colorScheme.tertiary
+                                            else -> MaterialTheme.colorScheme.secondaryContainer
+                                        }
+                                    )
                             )
                         }
                         Spacer(Modifier.height(4.dp)); Text(

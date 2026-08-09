@@ -41,6 +41,7 @@ class PlayUpdateManager(
                     launch(info, AppUpdateType.IMMEDIATE)
                 }
                 info.installStatus() == InstallStatus.DOWNLOADED -> listener.onUpdateDownloaded()
+                info.installStatus() in FLEXIBLE_UPDATE_ACTIVE_STATUSES -> registerInstallListener()
             }
         }
     }
@@ -62,16 +63,12 @@ class PlayUpdateManager(
             return
         }
 
-        val immediateRecommended =
-            info.updatePriority() >= IMMEDIATE_UPDATE_PRIORITY ||
-                (info.clientVersionStalenessDays() ?: 0) >= IMMEDIATE_UPDATE_STALENESS_DAYS
-
-        val type = when {
-            immediateRecommended && info.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) -> AppUpdateType.IMMEDIATE
-            info.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> AppUpdateType.FLEXIBLE
-            info.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) -> AppUpdateType.IMMEDIATE
-            else -> null
-        }
+        val type = UpdateFlowPolicy.selectType(
+            priority = info.updatePriority(),
+            stalenessDays = info.clientVersionStalenessDays(),
+            flexibleAllowed = info.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE),
+            immediateAllowed = info.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+        )
 
         if (type == null) {
             listener.onUpdateNotAllowed()
@@ -84,11 +81,12 @@ class PlayUpdateManager(
 
     private fun launch(info: AppUpdateInfo, updateType: Int) {
         runCatching {
-            manager.startUpdateFlowForResult(
+            val started = manager.startUpdateFlowForResult(
                 info,
                 updateLauncher,
                 AppUpdateOptions.newBuilder(updateType).build()
             )
+            if (!started) listener.onUpdateError()
         }.onFailure { listener.onUpdateError() }
     }
 
@@ -108,7 +106,10 @@ class PlayUpdateManager(
     }
 
     private companion object {
-        const val IMMEDIATE_UPDATE_PRIORITY = 4
-        const val IMMEDIATE_UPDATE_STALENESS_DAYS = 7
+        val FLEXIBLE_UPDATE_ACTIVE_STATUSES = setOf(
+            InstallStatus.PENDING,
+            InstallStatus.DOWNLOADING,
+            InstallStatus.INSTALLING
+        )
     }
 }

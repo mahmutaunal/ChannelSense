@@ -3,26 +3,29 @@ package com.mahmutalperenunal.channelsense
 import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mahmutalperenunal.channelsense.play.PlayReviewManager
 import com.mahmutalperenunal.channelsense.play.ReviewPromptCoordinator
 import com.mahmutalperenunal.channelsense.play.PlayUpdateManager
 import com.mahmutalperenunal.channelsense.play.ReviewResult
 import com.mahmutalperenunal.channelsense.ui.navigation.ChannelSenseNavGraph
 import com.mahmutalperenunal.channelsense.ui.theme.ChannelSenseTheme
+import com.mahmutalperenunal.channelsense.feature.settings.data.SettingsRepository
+import com.mahmutalperenunal.channelsense.feature.settings.model.AppSettings
+import com.mahmutalperenunal.channelsense.feature.settings.model.AppThemeMode
 
-class MainActivity : ComponentActivity(), PlayUpdateManager.Listener {
+class MainActivity : AppCompatActivity(), PlayUpdateManager.Listener {
 
     private val updateLauncher = registerForActivityResult(
         ActivityResultContracts.StartIntentSenderForResult()
@@ -40,6 +43,7 @@ class MainActivity : ComponentActivity(), PlayUpdateManager.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        enableEdgeToEdge()
 
         playUpdateManager = PlayUpdateManager(
             activity = this,
@@ -48,10 +52,21 @@ class MainActivity : ComponentActivity(), PlayUpdateManager.Listener {
         )
         playReviewManager = PlayReviewManager(this)
         reviewPromptCoordinator = ReviewPromptCoordinator(this).also { it.recordSession() }
+        SettingsRepository.ensureInitialized(this)
 
         setContent {
-            ChannelSenseTheme {
-                SetupSystemBars()
+            val appSettings by SettingsRepository.settingsFlow.collectAsState(
+                initial = AppSettings()
+            )
+            val useDarkTheme = when (appSettings.themeMode) {
+                AppThemeMode.SYSTEM -> isSystemInDarkTheme()
+                AppThemeMode.LIGHT -> false
+                AppThemeMode.DARK -> true
+            }
+            ChannelSenseTheme(
+                darkTheme = useDarkTheme,
+                dynamicColor = appSettings.materialYouEnabled
+            ) {
                 ChannelSenseApp(
                     onCheckForUpdate = { playUpdateManager.checkForUpdate(userInitiated = true) },
                     onRequestReview = ::requestInAppReview,
@@ -136,23 +151,6 @@ class MainActivity : ComponentActivity(), PlayUpdateManager.Listener {
 
     override fun onUpdateError() {
         Toast.makeText(this, R.string.update_error, Toast.LENGTH_SHORT).show()
-    }
-}
-
-@Composable
-fun SetupSystemBars() {
-    val systemUiController = rememberSystemUiController()
-    val useDarkIcons = !isSystemInDarkTheme()
-
-    SideEffect {
-        systemUiController.setStatusBarColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons
-        )
-        systemUiController.setNavigationBarColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons
-        )
     }
 }
 

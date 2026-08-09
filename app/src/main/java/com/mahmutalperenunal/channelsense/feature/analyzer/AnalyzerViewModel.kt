@@ -137,7 +137,10 @@ class AnalyzerViewModel(application: Application) : AndroidViewModel(application
 
     @SuppressLint("EmptySuperCall")
     override fun onCleared() {
-        autoRefreshJob?.cancel(); scanJob?.cancel(); super.onCleared()
+        autoRefreshJob?.cancel()
+        scanJob?.cancel()
+        connectedWifiProvider.close()
+        super.onCleared()
     }
 
     companion object {

@@ -6,6 +6,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.mahmutalperenunal.channelsense.feature.settings.model.AppSettings
+import com.mahmutalperenunal.channelsense.feature.settings.model.CongestionAlertInterval
+import com.mahmutalperenunal.channelsense.feature.settings.model.AppThemeMode
 import com.mahmutalperenunal.channelsense.wifi.model.WifiBand
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -24,6 +26,10 @@ object SettingsRepository {
     private object Keys {
         val DEFAULT_BAND = stringPreferencesKey("default_band")
         val AUTO_REFRESH = booleanPreferencesKey("auto_refresh_enabled")
+        val CONGESTION_ALERTS = booleanPreferencesKey("congestion_alerts_enabled")
+        val CONGESTION_ALERT_INTERVAL = stringPreferencesKey("congestion_alert_interval")
+        val THEME_MODE = stringPreferencesKey("theme_mode")
+        val MATERIAL_YOU = booleanPreferencesKey("material_you_enabled")
     }
 
     fun ensureInitialized(context: Context) {
@@ -46,7 +52,15 @@ object SettingsRepository {
 
             AppSettings(
                 defaultBand = band,
-                autoRefreshEnabled = autoRefresh
+                autoRefreshEnabled = autoRefresh,
+                congestionAlertsEnabled = prefs[Keys.CONGESTION_ALERTS] ?: false,
+                congestionAlertInterval = prefs[Keys.CONGESTION_ALERT_INTERVAL]
+                    ?.let { stored -> CongestionAlertInterval.entries.find { it.name == stored } }
+                    ?: CongestionAlertInterval.SIX_HOURS,
+                themeMode = prefs[Keys.THEME_MODE]
+                    ?.let { stored -> AppThemeMode.entries.find { it.name == stored } }
+                    ?: AppThemeMode.SYSTEM,
+                materialYouEnabled = prefs[Keys.MATERIAL_YOU] ?: true
             )
         }
 
@@ -63,7 +77,15 @@ object SettingsRepository {
                     BAND_6 -> WifiBand.SIX_GHZ
                     else -> WifiBand.TWO_GHZ
                 },
-                autoRefreshEnabled = prefs[Keys.AUTO_REFRESH] ?: false
+                autoRefreshEnabled = prefs[Keys.AUTO_REFRESH] ?: false,
+                congestionAlertsEnabled = prefs[Keys.CONGESTION_ALERTS] ?: false,
+                congestionAlertInterval = prefs[Keys.CONGESTION_ALERT_INTERVAL]
+                    ?.let { stored -> CongestionAlertInterval.entries.find { it.name == stored } }
+                    ?: CongestionAlertInterval.SIX_HOURS,
+                themeMode = prefs[Keys.THEME_MODE]
+                    ?.let { stored -> AppThemeMode.entries.find { it.name == stored } }
+                    ?: AppThemeMode.SYSTEM,
+                materialYouEnabled = prefs[Keys.MATERIAL_YOU] ?: true
             )
 
             val newSettings = transform(current)
@@ -75,6 +97,10 @@ object SettingsRepository {
             }
 
             prefs[Keys.AUTO_REFRESH] = newSettings.autoRefreshEnabled
+            prefs[Keys.CONGESTION_ALERTS] = newSettings.congestionAlertsEnabled
+            prefs[Keys.CONGESTION_ALERT_INTERVAL] = newSettings.congestionAlertInterval.name
+            prefs[Keys.THEME_MODE] = newSettings.themeMode.name
+            prefs[Keys.MATERIAL_YOU] = newSettings.materialYouEnabled
         }
     }
 }

@@ -1,7 +1,13 @@
 package com.mahmutalperenunal.channelsense.feature.settings.ui
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +15,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,22 +23,24 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.PrivacyTip
 import androidx.compose.material.icons.filled.RateReview
 import androidx.compose.material.icons.filled.SystemUpdate
 import androidx.compose.material.icons.filled.Wifi
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -41,11 +50,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -55,7 +66,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.core.content.ContextCompat
 import com.mahmutalperenunal.channelsense.R
+import com.mahmutalperenunal.channelsense.feature.settings.model.CongestionAlertInterval
+import com.mahmutalperenunal.channelsense.feature.settings.model.AppLanguage
+import com.mahmutalperenunal.channelsense.feature.settings.model.AppThemeMode
+import com.mahmutalperenunal.channelsense.ui.components.ChannelSenseTopBar
 import com.mahmutalperenunal.channelsense.wifi.model.WifiBand
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
@@ -78,7 +94,68 @@ fun SettingsScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val linkErrorMessage = stringResource(R.string.settings_link_open_error)
+    val monitoringPermissionError = stringResource(R.string.settings_congestion_permission_error)
     val versionName = remember(context) { context.appVersionName() }
+    var pendingMonitoringEnable by remember { mutableStateOf(false) }
+    var showBackgroundLocationExplanation by remember { mutableStateOf(false) }
+
+    val backgroundSettingsLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (!context.needsBackgroundLocationPermission() && pendingMonitoringEnable) {
+            viewModel.onCongestionAlertsChanged(true)
+        } else {
+            scope.launch { snackbarHostState.showSnackbar(monitoringPermissionError) }
+        }
+        pendingMonitoringEnable = false
+    }
+
+    val backgroundLocationLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted && pendingMonitoringEnable) {
+            viewModel.onCongestionAlertsChanged(true)
+        } else if (!granted) {
+            scope.launch { snackbarHostState.showSnackbar(monitoringPermissionError) }
+        }
+        pendingMonitoringEnable = false
+    }
+    val notificationLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (!granted) {
+            pendingMonitoringEnable = false
+            scope.launch { snackbarHostState.showSnackbar(monitoringPermissionError) }
+        } else if (context.needsBackgroundLocationPermission()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                showBackgroundLocationExplanation = true
+            } else {
+                backgroundLocationLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            }
+        } else if (pendingMonitoringEnable) {
+            viewModel.onCongestionAlertsChanged(true)
+            pendingMonitoringEnable = false
+        }
+    }
+
+    fun requestMonitoringEnable() {
+        pendingMonitoringEnable = true
+        when {
+            context.needsNotificationPermission() ->
+                notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            context.needsBackgroundLocationPermission() -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    showBackgroundLocationExplanation = true
+                } else {
+                    backgroundLocationLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                }
+            }
+            else -> {
+                viewModel.onCongestionAlertsChanged(true)
+                pendingMonitoringEnable = false
+            }
+        }
+    }
 
     fun openLink(url: String) {
         if (!context.openExternalLink(url)) {
@@ -88,31 +165,36 @@ fun SettingsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.settings_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.cd_back)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    scrolledContainerColor = MaterialTheme.colorScheme.background
-                )
+            ChannelSenseTopBar(
+                title = stringResource(R.string.settings_title),
+                subtitle = stringResource(R.string.settings_subtitle),
+                onBackClick = onBackClick
             )
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize(),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
+            item {
+                SettingsSection(
+                    title = stringResource(R.string.settings_section_personalization_title),
+                    subtitle = stringResource(R.string.settings_section_personalization_subtitle)
+                ) {
+                    PersonalizationSettings(
+                        themeMode = state.themeMode,
+                        language = state.language,
+                        onThemeModeSelected = viewModel::onThemeModeChanged,
+                        onLanguageSelected = viewModel::onLanguageChanged
+                    )
+                }
+            }
+
             item {
                 SettingsSection(title = stringResource(R.string.settings_section_wifi_analyzer_title)) {
                     DefaultBandSettingRow(
@@ -123,6 +205,23 @@ fun SettingsScreen(
                     AutoRefreshSettingRow(
                         enabled = state.autoRefreshEnabled,
                         onToggle = viewModel::onAutoRefreshChanged
+                    )
+                }
+            }
+
+            item {
+                SettingsSection(
+                    title = stringResource(R.string.settings_section_monitoring_title),
+                    subtitle = stringResource(R.string.settings_section_monitoring_subtitle)
+                ) {
+                    CongestionAlertsSettingRow(
+                        enabled = state.congestionAlertsEnabled,
+                        interval = state.congestionAlertInterval,
+                        onToggle = { enabled ->
+                            if (enabled) requestMonitoringEnable()
+                            else viewModel.onCongestionAlertsChanged(false)
+                        },
+                        onIntervalSelected = viewModel::onCongestionAlertIntervalChanged
                     )
                 }
             }
@@ -208,6 +307,37 @@ fun SettingsScreen(
             }
         }
     }
+
+    if (showBackgroundLocationExplanation) {
+        AlertDialog(
+            onDismissRequest = {
+                showBackgroundLocationExplanation = false
+                pendingMonitoringEnable = false
+            },
+            title = { Text(stringResource(R.string.settings_background_location_title)) },
+            text = { Text(stringResource(R.string.settings_background_location_explanation)) },
+            confirmButton = {
+                Button(onClick = {
+                    showBackgroundLocationExplanation = false
+                    backgroundSettingsLauncher.launch(
+                        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = "package:${context.packageName}".toUri()
+                        }
+                    )
+                }) {
+                    Text(stringResource(R.string.settings_open_app_permissions))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showBackgroundLocationExplanation = false
+                    pendingMonitoringEnable = false
+                }) {
+                    Text(stringResource(R.string.settings_not_now))
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -216,15 +346,14 @@ private fun SettingsSection(
     subtitle: String? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Column(
             modifier = Modifier.padding(horizontal = 4.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
             if (subtitle != null) {
@@ -238,13 +367,96 @@ private fun SettingsSection(
 
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            shape = CardDefaults.elevatedShape,
+            shape = MaterialTheme.shapes.large,
             color = MaterialTheme.colorScheme.surfaceContainerLow,
-            tonalElevation = 1.dp
+            tonalElevation = 0.dp
         ) {
             Column(content = content)
         }
     }
+}
+
+@Composable
+private fun PersonalizationSettings(
+    themeMode: AppThemeMode,
+    language: AppLanguage,
+    onThemeModeSelected: (AppThemeMode) -> Unit,
+    onLanguageSelected: (AppLanguage) -> Unit
+) {
+    Column(modifier = Modifier.padding(vertical = 6.dp)) {
+        SettingChoiceBlock(
+            icon = Icons.Default.Palette,
+            title = stringResource(R.string.settings_theme_title),
+            description = stringResource(R.string.settings_theme_description)
+        ) {
+            AppThemeMode.entries.forEach { option ->
+                FilterChip(
+                    selected = themeMode == option,
+                    onClick = { onThemeModeSelected(option) },
+                    label = { Text(stringResource(option.labelResource())) }
+                )
+            }
+        }
+        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+        SettingChoiceBlock(
+            icon = Icons.Default.Translate,
+            title = stringResource(R.string.settings_language_title),
+            description = stringResource(R.string.settings_language_description)
+        ) {
+            AppLanguage.entries.forEach { option ->
+                FilterChip(
+                    selected = language == option,
+                    onClick = { onLanguageSelected(option) },
+                    label = { Text(stringResource(option.labelResource())) }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SettingChoiceBlock(
+    icon: ImageVector,
+    title: String,
+    description: String,
+    choices: @Composable RowScope.() -> Unit
+) {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            SettingIcon(icon)
+            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                Text(text = title, style = MaterialTheme.typography.titleSmall)
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            content = choices
+        )
+    }
+}
+
+private fun AppThemeMode.labelResource(): Int = when (this) {
+    AppThemeMode.SYSTEM -> R.string.settings_theme_system
+    AppThemeMode.LIGHT -> R.string.settings_theme_light
+    AppThemeMode.DARK -> R.string.settings_theme_dark
+}
+
+private fun AppLanguage.labelResource(): Int = when (this) {
+    AppLanguage.SYSTEM -> R.string.settings_language_system
+    AppLanguage.TURKISH -> R.string.settings_language_turkish
+    AppLanguage.ENGLISH -> R.string.settings_language_english
 }
 
 @Composable
@@ -324,6 +536,69 @@ private fun AutoRefreshSettingRow(
     )
 }
 
+@Composable
+private fun CongestionAlertsSettingRow(
+    enabled: Boolean,
+    interval: CongestionAlertInterval,
+    onToggle: (Boolean) -> Unit,
+    onIntervalSelected: (CongestionAlertInterval) -> Unit
+) {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            SettingIcon(Icons.Default.NotificationsActive)
+            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                Text(
+                    text = stringResource(R.string.settings_congestion_alerts_title),
+                    style = MaterialTheme.typography.titleSmall
+                )
+                Text(
+                    text = stringResource(R.string.settings_congestion_alerts_description),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Switch(checked = enabled, onCheckedChange = onToggle)
+        }
+
+        if (enabled) {
+            Text(
+                text = stringResource(R.string.settings_congestion_interval_title),
+                style = MaterialTheme.typography.labelLarge
+            )
+            Row(
+                modifier = Modifier.horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                CongestionAlertInterval.entries.forEach { option ->
+                    FilterChip(
+                        selected = interval == option,
+                        onClick = { onIntervalSelected(option) },
+                        label = { Text(stringResource(option.labelResource())) }
+                    )
+                }
+            }
+            Text(
+                text = stringResource(R.string.settings_congestion_battery_note),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+private fun CongestionAlertInterval.labelResource(): Int = when (this) {
+    CongestionAlertInterval.THIRTY_MINUTES -> R.string.interval_30_minutes
+    CongestionAlertInterval.ONE_HOUR -> R.string.interval_1_hour
+    CongestionAlertInterval.THREE_HOURS -> R.string.interval_3_hours
+    CongestionAlertInterval.SIX_HOURS -> R.string.interval_6_hours
+}
+
 
 @Composable
 private fun ActionRow(
@@ -385,14 +660,14 @@ private fun ExternalLinkRow(
 @Composable
 private fun SettingIcon(icon: ImageVector) {
     Surface(
-        shape = MaterialTheme.shapes.small,
+        shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.primaryContainer,
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer
     ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
-            modifier = Modifier.padding(8.dp).size(20.dp)
+            modifier = Modifier.padding(9.dp).size(20.dp)
         )
     }
 }
@@ -409,3 +684,13 @@ private fun Context.openExternalLink(url: String): Boolean = runCatching {
     startActivity(intent)
     true
 }.getOrDefault(false)
+
+private fun Context.needsNotificationPermission(): Boolean =
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+        ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
+        PackageManager.PERMISSION_GRANTED
+
+private fun Context.needsBackgroundLocationPermission(): Boolean =
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+        ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) !=
+        PackageManager.PERMISSION_GRANTED
