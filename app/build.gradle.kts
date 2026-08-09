@@ -14,7 +14,7 @@ extensions.configure<com.android.build.api.dsl.ApplicationExtension>("android") 
         applicationId = "com.mahmutalperenunal.channelsense"
         minSdk = 28
         targetSdk = 37
-        versionCode = 7
+        versionCode = 8
         versionName = "1.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -14,7 +14,7 @@ import com.mahmutalperenunal.channelsense.feature.settings.ui.SettingsScreen
 fun ChannelSenseNavGraph(
     navController: NavHostController,
     onCheckForUpdate: () -> Unit,
-    onRequestReview: () -> Unit,
+    onRateApp: () -> Unit,
     onSuccessfulScan: (Boolean) -> Unit,
     onGuideOpened: () -> Unit
 ) {
@@ -54,7 +54,7 @@ fun ChannelSenseNavGraph(
             SettingsScreen(
                 onBackClick = { navController.popBackStack() },
                 onCheckForUpdate = onCheckForUpdate,
-                onRequestReview = onRequestReview
+                onRateApp = onRateApp
             )
         }
     }

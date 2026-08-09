@@ -1,6 +1,7 @@
 package com.mahmutalperenunal.channelsense
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -18,12 +19,12 @@ import androidx.navigation.compose.rememberNavController
 import com.mahmutalperenunal.channelsense.play.PlayReviewManager
 import com.mahmutalperenunal.channelsense.play.ReviewPromptCoordinator
 import com.mahmutalperenunal.channelsense.play.PlayUpdateManager
-import com.mahmutalperenunal.channelsense.play.ReviewResult
 import com.mahmutalperenunal.channelsense.ui.navigation.ChannelSenseNavGraph
 import com.mahmutalperenunal.channelsense.ui.theme.ChannelSenseTheme
 import com.mahmutalperenunal.channelsense.feature.settings.data.SettingsRepository
 import com.mahmutalperenunal.channelsense.feature.settings.model.AppSettings
 import com.mahmutalperenunal.channelsense.feature.settings.model.AppThemeMode
+import androidx.core.net.toUri
 
 class MainActivity : AppCompatActivity(), PlayUpdateManager.Listener {
 
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity(), PlayUpdateManager.Listener {
             ) {
                 ChannelSenseApp(
                     onCheckForUpdate = { playUpdateManager.checkForUpdate(userInitiated = true) },
-                    onRequestReview = ::requestInAppReview,
+                    onRateApp = ::openPlayStoreReview,
                     onSuccessfulScan = ::onSuccessfulScan,
                     onGuideOpened = ::onGuideOpened
                 )
@@ -112,14 +113,20 @@ class MainActivity : AppCompatActivity(), PlayUpdateManager.Listener {
         playReviewManager.requestReview { }
     }
 
-    private fun requestInAppReview() {
-        playReviewManager.requestReview { result ->
-            val message = when (result) {
-                ReviewResult.Completed -> R.string.review_flow_completed
-                is ReviewResult.Failed -> R.string.review_flow_unavailable
+    private fun openPlayStoreReview() {
+        val marketIntent = Intent(
+            Intent.ACTION_VIEW,
+            "market://details?id=$packageName".toUri()
+        ).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
+        val webIntent = Intent(
+            Intent.ACTION_VIEW,
+            "https://play.google.com/store/apps/details?id=$packageName".toUri()
+        )
+        runCatching { startActivity(marketIntent) }
+            .recoverCatching { startActivity(webIntent) }
+            .onFailure {
+                Toast.makeText(this, R.string.review_flow_unavailable, Toast.LENGTH_SHORT).show()
             }
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun onNoUpdateAvailable() {
@@ -157,7 +164,7 @@ class MainActivity : AppCompatActivity(), PlayUpdateManager.Listener {
 @Composable
 fun ChannelSenseApp(
     onCheckForUpdate: () -> Unit,
-    onRequestReview: () -> Unit,
+    onRateApp: () -> Unit,
     onSuccessfulScan: (Boolean) -> Unit,
     onGuideOpened: () -> Unit
 ) {
@@ -166,7 +173,7 @@ fun ChannelSenseApp(
         ChannelSenseNavGraph(
             navController = navController,
             onCheckForUpdate = onCheckForUpdate,
-            onRequestReview = onRequestReview,
+            onRateApp = onRateApp,
             onSuccessfulScan = onSuccessfulScan,
             onGuideOpened = onGuideOpened
         )

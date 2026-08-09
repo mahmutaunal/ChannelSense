@@ -375,4 +375,4 @@ Background congestion monitoring is disabled by default. Users can opt in from S
 
 ### Context-aware in-app review
 
-ChannelSense does not ask for a rating on first launch. The automatic Google Play review flow becomes eligible only after meaningful use: repeated successful scans, multiple sessions, at least two days since first use, and exploration of detailed analysis or the channel guide. All counters remain on-device; no analytics or Wi-Fi data is transmitted. A long cooldown and a strict attempt limit prevent repeated interruptions. The manual rating action remains available in Settings.
+ChannelSense does not ask for a rating on first launch. The automatic Google Play review flow becomes eligible only after meaningful use: repeated successful scans, multiple sessions, at least two days since first use, and exploration of detailed analysis or the channel guide. All counters remain on-device; no analytics or Wi-Fi data is transmitted. A long cooldown and a strict attempt limit prevent repeated interruptions. A reliable manual action in Settings opens the official Google Play listing, because Play may silently suppress quota-limited in-app review cards.

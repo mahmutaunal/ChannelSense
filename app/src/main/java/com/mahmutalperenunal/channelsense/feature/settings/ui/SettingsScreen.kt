@@ -3,6 +3,7 @@ package com.mahmutalperenunal.channelsense.feature.settings.ui
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Settings
@@ -52,6 +53,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -71,10 +73,15 @@ import com.mahmutalperenunal.channelsense.R
 import com.mahmutalperenunal.channelsense.feature.settings.model.CongestionAlertInterval
 import com.mahmutalperenunal.channelsense.feature.settings.model.AppLanguage
 import com.mahmutalperenunal.channelsense.feature.settings.model.AppThemeMode
+import com.mahmutalperenunal.channelsense.monitoring.CongestionAlert
+import com.mahmutalperenunal.channelsense.monitoring.WifiCongestionNotifier
 import com.mahmutalperenunal.channelsense.ui.components.ChannelSenseTopBar
+import com.mahmutalperenunal.channelsense.wifi.connection.ConnectedWifiProvider
 import com.mahmutalperenunal.channelsense.wifi.model.WifiBand
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 import androidx.core.net.toUri
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val STUDIO_WEBSITE_URL = "https://www.alpwarestudio.com/"
 private const val SOURCE_CODE_URL = "https://github.com/mahmutaunal/ChannelSense"
@@ -86,7 +93,7 @@ private const val MORE_APPS_URL = "https://play.google.com/store/apps/dev?id=524
 fun SettingsScreen(
     onBackClick: () -> Unit,
     onCheckForUpdate: () -> Unit,
-    onRequestReview: () -> Unit,
+    onRateApp: () -> Unit,
     viewModel: SettingsViewModel = viewModel()
 ) {
     val state = viewModel.uiState
@@ -98,6 +105,13 @@ fun SettingsScreen(
     val versionName = remember(context) { context.appVersionName() }
     var pendingMonitoringEnable by remember { mutableStateOf(false) }
     var showBackgroundLocationExplanation by remember { mutableStateOf(false) }
+
+    LaunchedEffect(state.congestionAlertsEnabled) {
+        if (state.congestionAlertsEnabled && context.isDebuggable()) {
+            delay(5_000.milliseconds)
+            context.sendDebugCongestionAlert()
+        }
+    }
 
     val backgroundSettingsLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -250,7 +264,7 @@ fun SettingsScreen(
                         icon = Icons.Default.RateReview,
                         title = stringResource(R.string.settings_rate_app_title),
                         subtitle = stringResource(R.string.settings_rate_app_description),
-                        onClick = onRequestReview
+                        onClick = onRateApp
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     ActionRow(
@@ -694,3 +708,31 @@ private fun Context.needsBackgroundLocationPermission(): Boolean =
     Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
         ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) !=
         PackageManager.PERMISSION_GRANTED
+
+private fun Context.isDebuggable(): Boolean =
+    applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+
+private fun Context.sendDebugCongestionAlert() {
+    val provider = ConnectedWifiProvider(this)
+    val connected = try {
+        provider.current()
+    } finally {
+        provider.close()
+    }
+    val currentChannel = connected?.channel ?: 6
+    WifiCongestionNotifier.notify(
+        context = this,
+        alert = CongestionAlert(
+            networkName = connected?.ssid ?: "Demo Wi-Fi",
+            currentChannel = currentChannel,
+            occupancyPercent = 92,
+            recommendedChannel = debugRecommendedChannel(currentChannel)
+        )
+    )
+}
+
+private fun debugRecommendedChannel(currentChannel: Int): Int = when {
+    currentChannel <= 14 -> listOf(1, 6, 11).first { it != currentChannel }
+    currentChannel < 180 -> if (currentChannel == 36) 44 else 36
+    else -> if (currentChannel == 5) 21 else 5
+}
